@@ -1,0 +1,2 @@
+chess>=1.10
+edq-utils>=0.0.5

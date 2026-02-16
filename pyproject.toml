@@ -1,0 +1,57 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+    "build",
+    "packaging>=21.3",
+    "setuptools>=60",
+    "setuptools-scm>=8.0",
+    "twine",
+    "vermin",
+]
+
+[project]
+name = "chessai"
+description = "An AI educational project disguised as chess."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE.md"}
+
+authors = [
+    {name = "Lucas Ellenberger", email = "lmellenb@ucsc.edu"},
+]
+
+keywords = ['AI', 'Artificial Intelligence', 'Education', 'Teaching']
+classifiers = [
+    'Intended Audience :: Science/Research',
+    'Intended Audience :: Education',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python :: 3.10',
+    'Topic :: Education',
+    'Topic :: Scientific/Engineering :: Artificial Intelligence',
+]
+
+dynamic = [
+    "version",
+    "dependencies",
+    "optional-dependencies",
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "chessai.__version__"}
+dependencies = {file = ["requirements.txt"]}
+optional-dependencies = {dev = {file = ["requirements-dev.txt"]}}
+
+[project.urls]
+Homepage = "https://github.com/linqs/pacman"
+Repository = "https://github.com/linqs/pacman"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.package-data]
+"*" = ["*"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["chessai*"]
+namespaces = false

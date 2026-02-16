@@ -1,0 +1,25 @@
+import enum
+import typing
+
+import chessai.core.isolation.isolator
+import chessai.core.isolation.none
+
+class Level(enum.Enum):
+    """ An enum representing the different isolation levels supported by the engine. """
+
+    NONE = 'none'
+
+    def get_isolator(self, **kwargs: typing.Any) -> chessai.core.isolation.isolator.AgentIsolator:
+        """ Get an isolator matching the given level. """
+
+        isolator: chessai.core.isolation.isolator.AgentIsolator | None = None
+
+        if (self == Level.NONE):
+            isolator = chessai.core.isolation.none.NoneIsolator(**kwargs)
+
+        if (isolator is None):
+            raise ValueError(f"Unknown isolation level '{self}'.")
+
+        return isolator
+
+LEVELS: list[str] = [item.value for item in Level]
