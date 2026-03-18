@@ -179,27 +179,30 @@ class AgentStateEvaluationFunction(typing.Protocol):
 def base_eval(
         state: GameState,
         agent: typing.Any | None = None,
-        **kwargs: typing.Any) -> int:
-    """ The most basic evaluation function, which just uses the difference of the number of pieces. """
-
+        **kwargs: typing.Any) -> float:
+    """
+    The most basic evaluation function, which just uses the difference of the number of pieces.
+    """
     board = state.get_board()
 
-    piece_types: list[int] = [
-        chess.PAWN,
-        chess.KNIGHT,
-        chess.BISHOP,
-        chess.ROOK,
-        chess.QUEEN,
-        chess.KING,
-    ]
+    piece_values: dict[int, int] = {
+        chess.PAWN: 1,
+        chess.KNIGHT: 3,
+        chess.BISHOP: 3,
+        chess.ROOK: 5,
+        chess.QUEEN: 9,
+        chess.KING: 9999,
+    }
 
     # The difference in pieces from white's perspective.
-    piece_count = 0
-    for piece_type in piece_types:
-        piece_count += len(board.get_pieces(piece_type, chess.WHITE)) - len(board.get_pieces(piece_type, chess.BLACK))
+    board_value = 0
+    for (piece_type, piece_value) in piece_values.items():
+        piece_count = len(board.get_pieces(piece_type, chess.WHITE)) - len(board.get_pieces(piece_type, chess.BLACK))
+
+        board_value += (piece_count * piece_value)
 
     if (board.get_turn() == chess.WHITE):
-        return piece_count
+        return board_value
 
     # The piece difference is the opposite for black.
-    return -1 * piece_count
+    return -1 * board_value

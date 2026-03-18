@@ -139,7 +139,7 @@ class Agent(abc.ABC):
 
     def evaluate_state(self,
             state: chessai.core.gamestate.GameState,
-            **kwargs: typing.Any) -> int:
+            **kwargs: typing.Any) -> float:
         """
         Evaluate the state to get a decide how good the current position is.
         The base implementation for this function just calls `self.evaluation_function`,

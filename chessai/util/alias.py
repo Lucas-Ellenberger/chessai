@@ -68,6 +68,7 @@ AGENT_AGGRESSIVE: Alias = Alias('agent-aggressive', 'chessai.agents.aggressive.A
 AGENT_RANDOM: Alias = Alias('agent-random', 'chessai.agents.random.RandomAgent')
 AGENT_SCRIPTED: Alias = Alias('agent-scripted', 'chessai.agents.scripted.ScriptedAgent')
 # AGENT_TIMEOUT: Alias = Alias('agent-timeout', 'chessai.agents.testing.TimeoutAgent')
+AGENT_VALUE: Alias = Alias('agent-value', 'chessai.agents.value.ValueAgent')
 
 AGENT_SHORT_NAMES: list[str] = [
     AGENT_AGGRESSIVE.short,
@@ -76,6 +77,7 @@ AGENT_SHORT_NAMES: list[str] = [
     AGENT_RANDOM.short,
     AGENT_SCRIPTED.short,
     # AGENT_TIMEOUT.short,
+    AGENT_VALUE.short,
 ]
 
 # TODO(Lucas): Implement all of the alias evals.

@@ -4,12 +4,12 @@ import chessai.core.agent
 import chessai.core.gamestate
 
 class AggressiveAgent(chessai.core.agent.Agent):
-    """ An agent that just takes random (legal) action. """
+    """ An agent that just takes a stochastic agressive action. """
 
     def get_action(self,
             state: chessai.core.gamestate.GameState) -> chess.Move:
         """
-        Returns a random legal move based on the game state.
+        Returns a stochastic aggressive move based on the game state.
         """
 
         board: chessai.core.board.Board = state.get_board()
