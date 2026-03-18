@@ -33,6 +33,10 @@ function main() {
     "${THIS_DIR}/run_tests.sh"
     ((error_count += $?))
 
+    echo -e "\nGenerating Docs"
+    "${THIS_DIR}/gen_docs.sh"
+    ((error_count += $?))
+
     echo "---"
     if [[ ${error_count} -gt 0 ]] ; then
         echo "Found ${error_count} issues."
