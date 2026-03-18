@@ -308,7 +308,7 @@ class Game(abc.ABC):
             return state
 
         action = action_record.get_action()
-        if (action != chess.Move.null()) and (action not in list(state.get_board().get_legal_moves())):
+        if (action not in list(state.get_board().get_legal_moves())):
             raise ValueError(f"Illegal action for agent {action_record.player}: '{action.uci()}' or type '{type(action)}'.")
 
         self._call_state_process_turn_full(state, action, rng)

@@ -64,7 +64,6 @@ def lookup(short: str, default: str | None = None) -> str:
 # TODO(Lucas): Implement all of the alias agents.
 # AGENT_CHEATING: Alias = Alias('agent-cheating', 'chessai.agents.cheating.CheatingAgent')
 AGENT_AGGRESSIVE: Alias = Alias('agent-aggressive', 'chessai.agents.aggressive.AggressiveAgent')
-AGENT_DUMMY: Alias = Alias('agent-dummy', 'chessai.agents.dummy.DummyAgent')
 # AGENT_MINIMAX: Alias = Alias('agent-minimax', 'chessai.student.multiagents.MyMinimaxLikeAgent')
 AGENT_RANDOM: Alias = Alias('agent-random', 'chessai.agents.random.RandomAgent')
 AGENT_SCRIPTED: Alias = Alias('agent-scripted', 'chessai.agents.scripted.ScriptedAgent')
@@ -73,7 +72,6 @@ AGENT_SCRIPTED: Alias = Alias('agent-scripted', 'chessai.agents.scripted.Scripte
 AGENT_SHORT_NAMES: list[str] = [
     AGENT_AGGRESSIVE.short,
     # AGENT_CHEATING.short,
-    AGENT_DUMMY.short,
     # AGENT_MINIMAX.short,
     AGENT_RANDOM.short,
     AGENT_SCRIPTED.short,
