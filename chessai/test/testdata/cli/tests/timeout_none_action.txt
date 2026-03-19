@@ -1,0 +1,20 @@
+{
+    "cli": "chessai.chess.bin",
+    "arguments": [
+        "--seed", "4",
+        "--black-team", "agent-timeout",
+        "--isolation", "none",
+        "--agent-start-timeout", "0.01",
+        "--agent-end-timeout", "0.01",
+        "--agent-action-timeout", "0.01",
+        "--agent-arg", "false::get_action_wait=0.1",
+        "--max-moves", "2"
+    ]
+}
+---
+<LOG_PREFIX> -- Average Score: -2.0
+<LOG_PREFIX> -- Scores:        -2
+<LOG_PREFIX> -- Win Rate:      0 / 1 (0.00)
+<LOG_PREFIX> -- Record:        Loss
+<LOG_PREFIX> -- Average Moves: 2.0
+<LOG_PREFIX> -- Move Counts:   2

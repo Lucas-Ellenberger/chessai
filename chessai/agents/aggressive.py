@@ -23,5 +23,5 @@ class AggressiveAgent(chessai.core.agent.Agent):
         # If we couldn't find a move that is a capture, return a random move.
         if (len(legal_moves) > 0):
             return legal_moves[0]
-        else:
-            return chess.Move.null()
+
+        return chess.Move.null()
