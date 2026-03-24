@@ -7,7 +7,7 @@ To that end, we have created a few guiding principles that we ask all participan
 The principles enumerated here are are guidelines, not hard-and-fast rules, and may evolve over time.
 Do your best to act in accordance with the spirit of these guidelines.
 
-Serious or repeat offenders may be temporarily or permanently banned from EduLinq resources.
+Serious or repeat offenders may be temporarily or permanently banned from Chessai resources.
 
 ## Code of Conduct
 
@@ -62,7 +62,7 @@ If you encounter someone who is not adhering to these guidelines,
 try to politely point them to this code of conduct.
 Remember that someone may just be having a hard time or trouble communicating.
 
-If you have persisting problems, contact [conduct@edulinq.org](mailto:conduct@edulinq.org).
+If you have persisting problems, contact [lmellenb@ucsc.edu](mailto:lmellenb@ucsc.edu).
 
 ## Resources / Inspirations
 

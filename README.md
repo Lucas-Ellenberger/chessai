@@ -9,7 +9,7 @@ API documentation for all releases is available at [lucas-ellenberger.github.io/
 
 ## Installation / Requirements
 
-This project requires [Python](https://www.python.org/) >= 3.10.
+This project requires [Python](https://www.python.org/) >= 3.8.
 
 Standard Python requirements are listed in `pyproject.toml`.
 The project and Python dependencies can be installed from source with:
@@ -17,9 +17,9 @@ The project and Python dependencies can be installed from source with:
 pip3 install .
 ```
 
-## Using chessai
+## Using Chessai
 
-Once installed, you can play a game of Pac-Man with:
+Once installed, you can play a game of Chess with:
 ```sh
 python3 -m chessai.chess
 ```
@@ -31,13 +31,14 @@ python3 -m chessai.chess --help
 
 ### Boards
 
-TODO: Provide default boards / puzzles and update documentation.
-
 You can change the board that you are playing on with the `--board` option.
+Any [chess FEN](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation) can be used to set the board.
+
+TODO: Provide default boards / puzzles and update documentation.
 Chessai comes with several different boards in the [chessai/resources/boards directory](chessai/resources/boards).
 For example:
 ```sh
-python3 -m chessai.chess --board classic-original
+python3 -m chessai.chess --board "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2"
 ```
 
 You can also specify a path to a board file if you want to use a custom board:
