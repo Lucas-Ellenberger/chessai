@@ -99,7 +99,7 @@ class GameState(edq.util.json.DictConverter):
         """ Return the list of legal actions for the current player. """
 
         # If the most recent move was a draw proposal, the opponent must respond.
-        if (self.get_previous_action() == chessai.core.action.ProposeDrawAction()):
+        if (isinstance(self.get_previous_action(), chessai.core.action.ProposeDrawAction)):
             return [
                 chessai.core.action.AcceptDrawAction(),
                 chessai.core.action.RejectDrawAction(),
