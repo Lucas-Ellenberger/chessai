@@ -91,14 +91,20 @@ class MoveAction(Action):
         if (not isinstance(other, MoveAction)):
             return False
 
-        return (self.start_coordinate, self.end_coordinate) == (other.start_coordinate, other.end_coordinate)
+        return ((self.start_coordinate == other.start_coordinate) and (self.end_coordinate == other.end_coordinate))
 
     def __lt__(self, other: object) -> bool:
         if (not isinstance(other, Action)):
             raise TypeError(f"Cannot compare an action with an object of type '{type(other)}'.")
 
         if isinstance(other, MoveAction):
-            return (self.start_coordinate, self.end_coordinate) < (other.start_coordinate, other.end_coordinate)
+            if (self.start_coordinate < other.start_coordinate):
+                return True
+
+            if ((self.start_coordinate == other.start_coordinate) and (self.end_coordinate < other.end_coordinate)):
+                return True
+
+            return False
 
         return self._type_order() < other._type_order()
 
