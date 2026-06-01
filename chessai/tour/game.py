@@ -49,7 +49,7 @@ class Game(chessai.core.game.Game):
         if (len(self.search_targets) == 0):
             # Let the gamestate parse the FEN so we can look for search targets from a file.
             initial_state = chessai.tour.gamestate.GameState.from_fen(fen = fen)
-            self.search_targets = initial_state.search_targets # pylint: disable=no-member
+            self.search_targets = initial_state.search_targets
         else:
             initial_state = chessai.tour.gamestate.GameState.from_fen(fen = fen, search_targets = self.search_targets)
 

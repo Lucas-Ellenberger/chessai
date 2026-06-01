@@ -53,15 +53,15 @@ class Game(chessai.chess.game.Game):
         if (args.move_lines is not None):
             # Override the move lines from the file if there are move lines from the CLI.
             move_lines = chessai.core.action.process_raw_action_list(args.move_lines)
-        elif (initial_state._move_lines is not None): # pylint: disable=no-member
+        elif (initial_state._move_lines is not None):
             # If the game does not have move lines, use the move lines found in the file.
-            move_lines = initial_state._move_lines # pylint: disable=no-member
+            move_lines = initial_state._move_lines
 
         self.move_lines = move_lines
         self.start_move_lines = self.move_lines.copy()
 
         # Override the dummy player with a scripted agent that follows the move lines.
-        self.game_info.agent_infos[initial_state.dummy_player].extra_arguments['move_lines'] = self.start_move_lines.copy() # pylint: disable=no-member
+        self.game_info.agent_infos[initial_state.dummy_player].extra_arguments['move_lines'] = self.start_move_lines.copy()
 
     def get_initial_state(self,
             rng: random.Random,

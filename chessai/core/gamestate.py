@@ -17,8 +17,6 @@ DEFAULT_FEN: str = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 
 _KNOWN_LEGAL_ACTIONS: dict[str, list[chessai.core.action.Action]] = {}
 
-T = typing.TypeVar('T', bound = 'GameState')
-
 class GameState(edq.util.json.DictConverter):
     """
     The base for all game states in chessai.
@@ -663,6 +661,12 @@ class GameState(edq.util.json.DictConverter):
         self.process_turn(action, rng, **kwargs)
         return
 
+    @classmethod
+    def get_gamestate_parser(cls) -> chessai.core.parser.GameStateParser:
+        """ Get the parser that can convert user inputs into a gamestate. """
+
+        return chessai.core.parser.parse_fen
+
     def to_dict(self) -> dict[str, typing.Any]:
         return {
             'board':            self.board.to_dict(),
@@ -703,17 +707,20 @@ class GameState(edq.util.json.DictConverter):
         )
 
     @classmethod
-    def from_fen(cls: type[T],
+    def from_fen(cls,
                  fen: str | None = None,
                  previous_action: chessai.core.action.Action | None = None,
                  seed: int = -1,
                  game_over: bool = False,
-                 fen_parser: chessai.core.parser.GameStateParser = chessai.core.parser.parse_fen,
-                 **kwargs: typing.Any) -> T:
+                 fen_parser: chessai.core.parser.GameStateParser | None = None,
+                 **kwargs: typing.Any) -> typing.Self:
         """ Create a gamestate from a starting FEN. """
 
         if (fen is None):
             fen = DEFAULT_FEN
+
+        if (fen_parser is None):
+            fen_parser = cls.get_gamestate_parser()
 
         parsed_fen = fen_parser(data = fen, **kwargs)
 

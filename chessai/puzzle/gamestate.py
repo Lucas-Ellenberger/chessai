@@ -5,6 +5,7 @@ import chessai.chess.gamestate
 import chessai.core.action
 import chessai.core.board
 import chessai.core.gamestate
+import chessai.core.parser
 import chessai.core.types
 import chessai.puzzle.parser
 
@@ -74,11 +75,5 @@ class GameState(chessai.chess.gamestate.GameState):
         return new_state
 
     @classmethod
-    def from_fen(cls,
-                 fen: str | None = None,
-                 previous_action: chessai.core.action.Action | None = None,
-                 seed: int = -1,
-                 game_over: bool = False,
-                 fen_parser: chessai.core.parser.GameStateParser = chessai.puzzle.parser.parse_puzzle,
-                 **kwargs: typing.Any) -> 'GameState':
-        return super().from_fen(fen, previous_action, seed, game_over, fen_parser, **kwargs)
+    def get_gamestate_parser(cls) -> chessai.core.parser.GameStateParser:
+        return chessai.puzzle.parser.parse_puzzle
