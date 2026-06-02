@@ -1,5 +1,4 @@
 import os
-import pathlib
 
 import edq.testing.unittest
 import edq.util.dirent
@@ -16,9 +15,10 @@ class GameTest(edq.testing.unittest.BaseTest):
         expected_score = 1.0
 
         board_paths = []
-        boards_dir = pathlib.Path(chessai.puzzle.parser.PUZZLES_DIR)
-        for path in boards_dir.iterdir():
-            if (not path.is_file()):
+        boards_dir = os.listdir(chessai.puzzle.parser.PUZZLES_DIR)
+        for dirent in boards_dir:
+            path = os.path.join(chessai.puzzle.parser.PUZZLES_DIR, dirent)
+            if (not os.path.isfile(path)):
                 continue
 
             if (os.path.splitext(path)[-1] != chessai.puzzle.parser.PUZZLE_FILE_EXTENSION):

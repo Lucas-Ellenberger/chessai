@@ -44,12 +44,12 @@ def parse_tour_from_string(text: str, **kwargs: typing.Any) -> chessai.core.pars
     return parsed_gamestate
 
 def parse_tour(data: str,
-                 default_dir: str = TOURS_DIR,
-                 default_extension: str = TOUR_FILE_EXTENSION,
-                 string_parser: chessai.core.parser.GameStateStringParser = parse_tour_from_string,
-                 accepts_raw_string: bool = False,
-                 options: dict[str, typing.Any] | None = None,
-                 **kwargs: typing.Any) -> chessai.core.parser.ParsedGameState:
+               default_dir: str = TOURS_DIR,
+               default_extension: str = TOUR_FILE_EXTENSION,
+               string_parser: chessai.core.parser.GameStateStringParser = parse_tour_from_string,
+               accepts_raw_string: bool = False,
+               options: dict[str, typing.Any] | None = None,
+               **kwargs: typing.Any) -> chessai.core.parser.ParsedGameState:
     """
     Parse a Tour GameState from a file path.
 

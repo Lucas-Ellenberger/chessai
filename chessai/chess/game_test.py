@@ -1,5 +1,4 @@
 import os
-import pathlib
 
 import edq.testing.unittest
 import edq.util.dirent
@@ -240,9 +239,10 @@ class GameTest(edq.testing.unittest.BaseTest):
         """ Test every PGN in the resources directory runs. """
 
         game_paths = []
-        games_dir = pathlib.Path(chessai.core.gameparser.GAMES_DIR)
-        for path in games_dir.iterdir():
-            if (not path.is_file()):
+        games_dir = os.listdir(chessai.core.gameparser.GAMES_DIR)
+        for dirent in games_dir:
+            path = os.path.join(chessai.core.gameparser.GAMES_DIR, dirent)
+            if (not os.path.isfile(path)):
                 continue
 
             if (os.path.splitext(path)[-1] == '.py'):
