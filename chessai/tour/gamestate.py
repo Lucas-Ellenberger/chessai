@@ -1,11 +1,12 @@
 import random
 import typing
 
+import chessai.chess.gamestate
 import chessai.core.action
 import chessai.core.board
-import chessai.core.gamestate
 import chessai.core.parser
 import chessai.tour.parser
+import chessai.tour.piece
 
 TIME_PENALTY: int = 1
 """ Number of points lost each round. """
@@ -22,7 +23,7 @@ LOSE_POINTS: int = -500
 CRASH_POINTS = -1000000
 """ Points for crashing the game. """
 
-class GameState(chessai.core.gamestate.GameState):
+class GameState(chessai.chess.gamestate.GameState):
     """ A game state specific to a Tour game. """
 
     def __init__(self,
@@ -70,15 +71,30 @@ class GameState(chessai.core.gamestate.GameState):
 
         return (len(self.search_targets) == 0)
 
+    # TODO: Should we make it more robust.
+    def is_checkmate(self) -> bool:
+        return False
+
+    def is_stalemate(self) -> bool:
+        return False
+
     def get_legal_actions(self) -> list[chessai.core.action.Action]:
+        tour_actions: list[chessai.core.action.Action] = []
+
         legal_actions = super().get_legal_actions()
+        for action in legal_actions:
+            # Tour agents cannot only perform movement actions.
+            if (not isinstance(action, chessai.core.action.MoveAction)):
+                continue
 
-        # Tour agents cannot propose a draw or forfeit the game.
-        for action in [chessai.core.action.ProposeDrawAction(), chessai.core.action.ForfeitAction()]:
-            if (action in legal_actions):
-                legal_actions.remove(action)
+            # Remove any actions that are capturing a Rock.
+            piece = self.get(action.end_coordinate) # pylint: disable=no-member
+            if (isinstance(piece, chessai.tour.piece.Rock)):
+                continue
 
-        return legal_actions
+            tour_actions.append(action)
+
+        return tour_actions
 
     def remove_search_target(self, coordinate: chessai.core.coordinate.Coordinate) -> None:
         """

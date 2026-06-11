@@ -172,7 +172,6 @@ class GameStateTest(edq.testing.unittest.BaseTest):
                 for expected_action in expected_actions:
                     self.assertIn(expected_action, actual_actions)
 
-
     def test_final_action(self):
         """ Test mate in 1 or stalemate in 1. """
 
