@@ -52,7 +52,7 @@ class Piece(edq.util.json.DictConverter):
             register_piece(symbol, cls)
 
     def __init__(self,
-             color: chessai.core.types.Color) -> None:
+                 color: chessai.core.types.Color) -> None:
         self.color: chessai.core.types.Color = color
         """ The team color that this piece belongs to. """
 

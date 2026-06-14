@@ -59,6 +59,9 @@ class MultiScriptedAgent(chessai.core.agent.Agent):
     def _update_move_lines(self, action: chessai.core.action.Action) -> None:
         """ Update the possible move lines based on the action taken. """
 
+        if (isinstance(action, chessai.core.action.NoneAction)):
+            return
+
         new_move_lines = []
 
         for move_line in self._move_lines:

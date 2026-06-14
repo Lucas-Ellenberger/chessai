@@ -2,7 +2,7 @@
     "cli": "chessai.tour.bin",
     "arguments": [
         "--seed", "4",
-        "--white-team", "agent-search-problem",
+        "--agent", "agent-search-problem",
         "--agent-arg", "white::solver=search-solver-astar",
         "--max-moves", "100"
     ]

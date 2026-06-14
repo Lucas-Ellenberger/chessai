@@ -1,9 +1,9 @@
 import edq.testing.unittest
 
 import chessai.chess.gamestate
-import chessai.core.gamestate
-import chessai.core.coordinate
 import chessai.core.action
+import chessai.core.coordinate
+import chessai.core.gamestate
 import chessai.core.types
 
 class GameStateTest(edq.testing.unittest.BaseTest):

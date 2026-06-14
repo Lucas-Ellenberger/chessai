@@ -21,9 +21,9 @@ def set_cli_args(parser: argparse.ArgumentParser, **kwargs: typing.Any) -> argpa
     This is a sibling to init_from_args(), as the arguments set here can be interpreted there.
     """
 
-    parser.add_argument('--white-team', dest = 'white',
+    parser.add_argument('--agent', dest = 'agent',
             action = 'store', type = str, default = chessai.util.alias.AGENT_RANDOM.short,
-            help = ('Select the agent type that the white side will use (default: %(default)s).'
+            help = ('Select the agent type that the tour agent will use (default: %(default)s).'
                     + f' Builtin agents: {chessai.util.alias.AGENT_SHORT_NAMES}.'))
 
     parser.add_argument('--search-targets', dest = 'search_targets',
@@ -39,12 +39,28 @@ def init_from_args(args: argparse.Namespace) -> tuple[dict[chessai.core.types.Co
     Setup agents based on Tour rules.
     """
 
+    solver_color = _detect_solver_color(args)
+
     base_agent_infos: dict[chessai.core.types.Color, chessai.core.agentinfo.AgentInfo] = {
-        chessai.core.types.Color.WHITE: chessai.core.agentinfo.AgentInfo(name = args.white),
-        chessai.core.types.Color.BLACK: chessai.core.agentinfo.AgentInfo(name = chessai.util.alias.AGENT_DUMMY.short),
+        solver_color:            chessai.core.agentinfo.AgentInfo(name = args.agent),
+        solver_color.opposite(): chessai.core.agentinfo.AgentInfo(name = chessai.util.alias.AGENT_MULTI_SCRIPTED.short),
     }
 
     return base_agent_infos, [], {}
+
+def _detect_solver_color(args: argparse.Namespace) -> chessai.core.types.Color:
+    """
+    Determine which color is the puzzle solver (i.e., the side that moves first).
+    """
+
+    board_arg = args.board
+    if (board_arg is None):
+        board_arg = DEFAULT_BOARD
+
+    board_arg = typing.cast(str, board_arg)
+
+    parsed_fen = chessai.tour.parser.parse_tour(board_arg)
+    return parsed_fen.turn
 
 def log_tour_results(results: list[chessai.core.game.GameResult], winning_agent_teams: set[chessai.core.types.Color], prefix: str = '') -> None:
     """

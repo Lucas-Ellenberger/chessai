@@ -1,0 +1,16 @@
+{
+    "cli": "chessai.tour.bin",
+    "arguments": [
+        "--seed", "1",
+        "--board", "tour-rocks",
+        "--max-moves", "100",
+        "--agent", "agent-multi-scripted",
+        "--agent-arg", "white::move_lines=[[\"a1c2\", \"c2b4\", \"b4d3\", \"d3f2\", \"f2g4\", \"g4h6\", \"h6f7\", \"f7h8\"]]"
+    ]
+}
+---
+<LOG_PREFIX> -- Average Score: 502.00
+<LOG_PREFIX> -- Scores:        502
+<LOG_PREFIX> -- Record:        Win
+<LOG_PREFIX> -- Average Moves: 15.0
+<LOG_PREFIX> -- Move Counts:   15

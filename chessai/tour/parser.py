@@ -28,7 +28,6 @@ def parse_tour_from_string(text: str, **kwargs: typing.Any) -> chessai.core.pars
     """ Load a tour from a string, which is expected to be JSON data. """
 
     # Extract the JSON data into the tour info.
-    # print(text)
     data_dict = edq.util.json.loads(text)
     tour_info = TourInfo(**data_dict)
 
@@ -48,7 +47,7 @@ def parse_tour(data: str,
                default_dir: str = TOURS_DIR,
                default_extension: str = TOUR_FILE_EXTENSION,
                string_parser: chessai.core.parser.GameStateStringParser = parse_tour_from_string,
-               accepts_raw_string: bool = True,
+               accepts_raw_string: bool = False,
                options: dict[str, typing.Any] | None = None,
                **kwargs: typing.Any) -> chessai.core.parser.ParsedGameState:
     """

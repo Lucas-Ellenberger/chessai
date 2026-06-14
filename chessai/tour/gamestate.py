@@ -20,7 +20,7 @@ BOARD_CLEAR_POINTS: int = 500
 LOSE_POINTS: int = -500
 """ Points for not finding a solution. """
 
-CRASH_POINTS = -1000000
+CRASH_POINTS: int = -1000000
 """ Points for crashing the game. """
 
 class GameState(chessai.chess.gamestate.GameState):
@@ -71,7 +71,6 @@ class GameState(chessai.chess.gamestate.GameState):
 
         return (len(self.search_targets) == 0)
 
-    # TODO: Should we make it more robust.
     def is_checkmate(self) -> bool:
         return False
 
