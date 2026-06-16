@@ -48,7 +48,7 @@ class TextUI(chessai.core.ui.UI):
         for rank in range((state.board.num_ranks - 1), -1, -1):
             line = f"{rank + 1}{self._get_padding()}|"
 
-            for file in range((state.board.num_files - 1), -1, -1):
+            for file in range(state.board.num_files):
                 piece_symbol = self._translate_piece(state.board.get(file, rank), state)
                 line += f"{piece_symbol}|"
 

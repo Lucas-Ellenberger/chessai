@@ -70,6 +70,7 @@ AGENT_REFLEX: Alias = Alias('agent-reflex', 'chessai.student.multiagents.ReflexA
 AGENT_SCRIPTED: Alias = Alias('agent-scripted', 'chessai.agents.scripted.ScriptedAgent')
 AGENT_SEARCH_PROBLEM: Alias = Alias('agent-search-problem', 'chessai.agents.searchproblem.SearchProblemAgent')
 AGENT_TIMEOUT: Alias = Alias('agent-timeout', 'chessai.agents.testing.TimeoutAgent')
+AGENT_USER_INPUT: Alias = Alias('agent-user-input', 'chessai.agents.userinput.UserInputAgent')
 
 AGENT_SHORT_NAMES: list[str] = [
     AGENT_AGGRESSIVE.short,
@@ -81,6 +82,7 @@ AGENT_SHORT_NAMES: list[str] = [
     AGENT_SCRIPTED.short,
     AGENT_SEARCH_PROBLEM.short,
     AGENT_TIMEOUT.short,
+    AGENT_USER_INPUT.short,
 ]
 
 DISTANCE_EUCLIDEAN: Alias = Alias('distance-euclidean', 'chessai.search.distance.euclidean_distance')
