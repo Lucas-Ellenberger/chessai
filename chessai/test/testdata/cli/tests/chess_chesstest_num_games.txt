@@ -2,6 +2,7 @@
     "cli": "chessai.chess.bin",
     "arguments": [
         "--seed", "2",
+        "--ui", "null",
         "--max-moves", "200",
         "--num-games", "2",
         "--white-team", "agent-random",
@@ -9,8 +10,8 @@
     ]
 }
 ---
-<LOG_PREFIX> -- Average Score: 0.50
-<LOG_PREFIX> -- Scores:        1.0, 0.0
-<LOG_PREFIX> -- Record:        Win, Loss
-<LOG_PREFIX> -- Average Moves: 8.5
-<LOG_PREFIX> -- Move Counts:   12, 5
+<LOG_PREFIX> -- Average Score: 0.00
+<LOG_PREFIX> -- Scores:        0.0, 0.0
+<LOG_PREFIX> -- Record:        Loss, Loss
+<LOG_PREFIX> -- Average Moves: 10.0
+<LOG_PREFIX> -- Move Counts:   15, 5

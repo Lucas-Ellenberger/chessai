@@ -103,7 +103,6 @@ class GameState(edq.util.json.DictConverter):
             return [
                 chessai.core.action.AcceptDrawAction(),
                 chessai.core.action.RejectDrawAction(),
-                chessai.core.action.ForfeitAction(),
             ]
 
         # Check if we have previously calculated the legal actions for this gamestate.
@@ -153,6 +152,12 @@ class GameState(edq.util.json.DictConverter):
         _KNOWN_LEGAL_ACTIONS[partial_fen] = legal_actions
 
         return legal_actions.copy()
+
+    def get_legal_move_actions(self) -> list[chessai.core.action.MoveAction]:
+        """ Get the list of legal actions, without any meta actions. """
+
+        legal_actions = self.get_legal_actions()
+        return [legal_action for legal_action in legal_actions if isinstance(legal_action, chessai.core.action.MoveAction)]
 
     def is_capture(self, action: chessai.core.action.Action) -> bool:
         """ Return whether the given action captures a piece. """

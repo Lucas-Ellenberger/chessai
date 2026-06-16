@@ -2,6 +2,7 @@
     "cli": "chessai.tour.bin",
     "arguments": [
         "--seed", "1",
+        "--ui", "null",
         "--board", "tour-rocks",
         "--max-moves", "100",
         "--agent", "agent-multi-scripted",

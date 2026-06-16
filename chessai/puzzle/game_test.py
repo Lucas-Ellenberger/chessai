@@ -41,6 +41,7 @@ class GameTest(edq.testing.unittest.BaseTest):
                 agent_arg = f"{gamestate.turn.symbol()}::move_lines={move_lines}"
 
                 argv = [
+                    '--ui', 'null',
                     '--log-level', 'CRITICAL',
                     '--board', str(board_path),
                     '--agent', 'agent-multi-scripted',

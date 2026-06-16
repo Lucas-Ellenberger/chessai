@@ -7,6 +7,7 @@ import chessai.core.agentaction
 import chessai.core.agentinfo
 import chessai.core.game
 import chessai.core.log
+import chessai.core.ui
 import chessai.util.alias
 
 SCORE_LIST_MAX_INFO_LENGTH: int = 50
@@ -174,6 +175,9 @@ def get_parser(
     # Add logging arguments.
     parser = chessai.core.log.set_cli_args(parser)
 
+    # Add UI arguments.
+    parser = chessai.core.ui.set_cli_args(parser)
+
     # Add game arguments.
     parser = chessai.core.game.set_cli_args(parser, default_board = default_board)
 
@@ -200,6 +204,19 @@ def parse_args(
     # Parse custom options.
     base_agent_infos, _, kwargs = custom_init_from_args(args)
 
+    # Parse UI options.
+
+    additional_ui_args: dict[str, str] = {}
+    # if (get_additional_ui_options is not None):
+    #     additional_ui_args = get_additional_ui_options(args)
+
+    # null_out_uis = args.num_training
+    # if (args.show_training_ui):
+    #     null_out_uis = 0
+    null_out_uis = 0
+
+    args = chessai.core.ui.init_from_args(args, null_out_uis = null_out_uis, additional_args = additional_ui_args)
+
     # Parse game arguments.
     args = chessai.core.game.init_from_args(args, game_class, state_class,
             base_agent_infos = base_agent_infos, **kwargs)
@@ -214,7 +231,7 @@ def run_games(
     """
     Run one or more standard games using pre-parsed arguments.
     The arguments are expected to have `_games`,
-    as if `chessai.core.game.init_from_args()` have been called.
+    as if `chessai.core.game.init_from_args()` `chessai.core.ui.init_from_args` have been called.
 
     Returns the results of the games.
     """
@@ -226,8 +243,9 @@ def run_games(
 
     for i in range(args.num_games):
         game = args._games[i]
+        ui = args._uis[i]
 
-        result = game.run()
+        result = game.run(ui)
         results.append(result)
 
     if (len(results) > 0):

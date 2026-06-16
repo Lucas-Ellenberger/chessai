@@ -1,6 +1,7 @@
 {
     "cli": "chessai.puzzle.bin",
     "arguments": [
+        "--ui", "null",
         "--agent", "agent-multi-scripted",
         "--agent-arg", "white::move_lines=[[\"f7f2\"]]"
     ]

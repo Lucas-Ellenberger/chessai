@@ -1,6 +1,7 @@
 {
     "cli": "chessai.chess.bin",
     "arguments": [
+        "--ui", "null",
         "--max-moves", "100",
         "--replay-path", "black-checkmate.pgn.gz",
     ]

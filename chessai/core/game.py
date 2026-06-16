@@ -15,6 +15,7 @@ import chessai.core.agentinfo
 import chessai.core.board
 import chessai.core.gameparser
 import chessai.core.isolation.level
+import chessai.core.ui
 import chessai.util.alias
 
 DEFAULT_MAX_MOVES: int = -1
@@ -492,7 +493,7 @@ class Game(abc.ABC):
         Make any last adjustments to the game result after the game is over.
         """
 
-    def run(self) -> GameResult:
+    def run(self, ui: chessai.core.ui.UI) -> GameResult:
         """
         The main "game loop" for all games.
         """
@@ -532,6 +533,9 @@ class Game(abc.ABC):
 
         state.agents_game_start(records)
 
+        # Start the UI.
+        ui.game_start(state)
+
         while (not self.check_end(state)):
             logging.trace("Turn %d, agent %s.", state.fullmove_number, state.turn) # type: ignore[attr-defined]  # pylint: disable=no-member
 
@@ -550,7 +554,7 @@ class Game(abc.ABC):
             state = self.process_turn(state, action_record, result, rng)
 
             # Update the UI.
-            # ui.update(state, board_highlights = action_record.get_board_highlights())
+            ui.update(state)
 
             # Update the game result and move history.
             result.history.append(action_record)
@@ -583,11 +587,11 @@ class Game(abc.ABC):
         self.game_complete(state, result)
 
         # Update the UI.
-        # ui.game_complete(state)
+        ui.game_complete(state)
 
         # Cleanup
         isolator.close()
-        # ui.close()
+        ui.close()
 
         if ((not self._is_replay) and (self._save_path is not None)):
             logging.info("Saving results to '%s'.", self._save_path)
@@ -596,17 +600,6 @@ class Game(abc.ABC):
             edq.util.dirent.write_file(self._save_path, pgn)
 
         return result
-
-    # def _receive_user_inputs(self,
-    #         agent_user_inputs: dict[bool, list[chess.Move]],
-    #         # ui: chessai.core.ui.UI,
-    #         ) -> None:
-    #     """ Add the current user inputs to the running list for each agent. """
-
-    #     new_user_inputs = ui.get_user_inputs()
-
-    #     for user_inputs in agent_user_inputs.values():
-    #         user_inputs += new_user_inputs
 
 def set_cli_args(parser: argparse.ArgumentParser, default_board: str | None = None) -> argparse.ArgumentParser:
     """

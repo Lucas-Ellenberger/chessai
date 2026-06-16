@@ -2,6 +2,7 @@
     "cli": "chessai.chess.bin",
     "arguments": [
         "--seed", "2",
+        "--ui", "null",
         "--white-team", "agent-minimax",
         "--agent-arg", "white::alphabeta_prune=true",
         "--max-moves", "100",

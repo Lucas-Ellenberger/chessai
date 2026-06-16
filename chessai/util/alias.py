@@ -146,3 +146,17 @@ STATE_EVAL_SHORT_NAMES: list[str] = [
     STATE_EVAL_BASE.short,
     STATE_EVAL_MINIMAX_BETTER.short,
 ]
+
+UI_NULL: Alias = Alias('null', 'chessai.ui.null.NullUI')
+UI_STDIO: Alias = Alias('text', 'chessai.ui.text.StdioUI', skip_windows_test = True)
+# UI_STDIO_PACMAN: Alias = Alias('text-pacman', 'chessai.pacman.textui.StdioUI', skip_windows_test = True)
+UI_RAW_TEXT: Alias = Alias('raw-text', 'chessai.ui.text.TextUI', skip_windows_test = True)
+# UI_TK: Alias = Alias('tk', 'chessai.ui.tk.TkUI')
+# UI_WEB: Alias = Alias('web', 'chessai.ui.web.WebUI')
+
+UI_SHORT_NAMES: list[str] = [
+    UI_NULL.short,
+    UI_STDIO.short,
+    # UI_TK.short,
+    # UI_WEB.short,
+]

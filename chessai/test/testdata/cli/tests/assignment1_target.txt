@@ -2,6 +2,7 @@
     "cli": "chessai.tour.bin",
     "arguments": [
         "--seed", "4",
+        "--ui", "null",
         "--search-targets", "a1",
         "--max-moves", "100"
     ]

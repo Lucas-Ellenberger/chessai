@@ -216,6 +216,7 @@ class GameTest(edq.testing.unittest.BaseTest):
         # Run a short capture game and save the replay.
         argv = [
             '--seed', '2',
+            '--ui', 'null',
             '--save-path', replay_path,
             '--white-team', 'agent-random',
             '--black-team', 'agent-random',
@@ -229,6 +230,7 @@ class GameTest(edq.testing.unittest.BaseTest):
         # Replay the game and get the same result.
         argv = [
             '--replay-path', replay_path,
+            '--ui', 'null',
             '--log-level', 'CRITICAL',
         ]
         results = chessai.chess.bin.main(argv = argv)
@@ -258,6 +260,7 @@ class GameTest(edq.testing.unittest.BaseTest):
         for (i, game_path) in enumerate(game_paths):
             with self.subTest(msg = f"Case {i}, path: {game_path}"):
                 argv = [
+                    '--ui', 'null',
                     '--log-level', 'CRITICAL',
                     '--replay-path', str(game_path),
                     '--max-moves', '200',
