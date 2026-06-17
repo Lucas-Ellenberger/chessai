@@ -16,9 +16,54 @@
 <LOG_PREFIX> -- Turn: 2, Minimax Score: 0, Chosen Action: g1f3, States Evaluated: 1, Nodes Visited: 5.
 <LOG_PREFIX> -- Turn: 3, Minimax Score: 0, Chosen Action: c2c4, States Evaluated: 1, Nodes Visited: 5.
 <LOG_PREFIX> -- Turn: 4, Minimax Score: -3, Chosen Action: f3g5, States Evaluated: 1, Nodes Visited: 5.
-<LOG_PREFIX> -- Minimax-like agent complete. Player: white, Ply Count: 2, Use Alpha-Beta Pruning: False, Use Expectimax: False, States Evaluated: 5, Nodes Visited: 25.
-<LOG_PREFIX> -- Average Score: 1.00
-<LOG_PREFIX> -- Scores:        1.0
-<LOG_PREFIX> -- Record:        Win
-<LOG_PREFIX> -- Average Moves: 10.0
-<LOG_PREFIX> -- Move Counts:   10
+<LOG_PREFIX> -- Turn: 5, Minimax Score: 0, Chosen Action: a2a3, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 6, Minimax Score: -1, Chosen Action: h2h3, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 7, Minimax Score: 9, Chosen Action: g2g3, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 8, Minimax Score: 0, Chosen Action: f1g2, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 9, Minimax Score: 0, Chosen Action: e1f1, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 10, Minimax Score: 0, Chosen Action: g2f3, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 11, Minimax Score: -1, Chosen Action: h1h2, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 12, Minimax Score: 3, Chosen Action: f3c6, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 13, Minimax Score: 3, Chosen Action: c6g2, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 14, Minimax Score: 3, Chosen Action: g5h7, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 15, Minimax Score: 3, Chosen Action: f1f2, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 16, Minimax Score: 4, Chosen Action: f5e6, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 17, Minimax Score: 4, Chosen Action: g2f3, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 18, Minimax Score: 1, Chosen Action: f2f1, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 19, Minimax Score: 4, Chosen Action: f3g4, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 20, Minimax Score: 3, Chosen Action: e6e7, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 21, Minimax Score: 3, Chosen Action: g4d7, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 22, Minimax Score: 3, Chosen Action: d1c2, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 23, Minimax Score: 3, Chosen Action: h7g5, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 24, Minimax Score: 0, Chosen Action: b2b4, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 25, Minimax Score: 3, Chosen Action: g5e6, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 26, Minimax Score: -6, Chosen Action: h2f2, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 27, Minimax Score: 4, Chosen Action: d7b5, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 28, Minimax Score: 5, Chosen Action: e6g7, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 29, Minimax Score: 2, Chosen Action: f2g2, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 30, Minimax Score: 5, Chosen Action: b1c3, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 31, Minimax Score: 2, Chosen Action: c3d5, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 32, Minimax Score: 2, Chosen Action: g3g4, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 33, Minimax Score: 2, Chosen Action: c2c3, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 34, Minimax Score: 2, Chosen Action: g7e6, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 35, Minimax Score: 7, Chosen Action: g2g1, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 36, Minimax Score: 2, Chosen Action: e6c5, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 37, Minimax Score: 1, Chosen Action: h3h4, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 38, Minimax Score: 0, Chosen Action: c5b3, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 39, Minimax Score: 3, Chosen Action: e2e4, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 40, Minimax Score: 1, Chosen Action: g1h1, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 41, Minimax Score: 0, Chosen Action: h1g1, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 42, Minimax Score: 1, Chosen Action: c3c2, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 43, Minimax Score: 1, Chosen Action: b5a6, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 44, Minimax Score: 1, Chosen Action: c4c5, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 45, Minimax Score: 1, Chosen Action: a6b7, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 46, Minimax Score: 0, Chosen Action: f1g2, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 47, Minimax Score: 1, Chosen Action: a1b1, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 48, Minimax Score: -1, Chosen Action: c2d3, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Turn: 49, Minimax Score: 0, Chosen Action: g1e1, States Evaluated: 1, Nodes Visited: 5.
+<LOG_PREFIX> -- Minimax-like agent complete. Player: white, Ply Count: 2, Use Alpha-Beta Pruning: False, Use Expectimax: False, States Evaluated: 50, Nodes Visited: 250.
+<LOG_PREFIX> -- Average Score: 0.50
+<LOG_PREFIX> -- Scores:        0.5
+<LOG_PREFIX> -- Record:        Tie
+<LOG_PREFIX> -- Average Moves: 100.0
+<LOG_PREFIX> -- Move Counts:   100

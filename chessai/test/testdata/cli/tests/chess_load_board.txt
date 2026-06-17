@@ -4,12 +4,12 @@
         "--seed", "2",
         "--ui", "null",
         "--max-moves", "100",
-        "--board", "chessai/resources/boards/standard.fen"
+        "--board", "chessai/resources/boards/mini-silverman.fen"
     ]
 }
 ---
-<LOG_PREFIX> -- Average Score: 0.00
-<LOG_PREFIX> -- Scores:        0.0
-<LOG_PREFIX> -- Record:        Loss
-<LOG_PREFIX> -- Average Moves: 31.0
-<LOG_PREFIX> -- Move Counts:   31
+<LOG_PREFIX> -- Average Score: 0.50
+<LOG_PREFIX> -- Scores:        0.5
+<LOG_PREFIX> -- Record:        Tie
+<LOG_PREFIX> -- Average Moves: 57.0
+<LOG_PREFIX> -- Move Counts:   57

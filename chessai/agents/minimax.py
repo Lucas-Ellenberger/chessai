@@ -132,6 +132,11 @@ class MinimaxLikeAgent(chessai.core.agent.Agent):
         if ((len(legal_actions) > 1) and (chessai.core.action.ForfeitAction() in legal_actions)):
             legal_actions.remove(chessai.core.action.ForfeitAction())
 
+        # Don't consider proposing a draw unless we can do nothing else.
+        # This will help keep the game moving along.
+        if ((len(legal_actions) > 1) and (chessai.core.action.ProposeDrawAction() in legal_actions)):
+            legal_actions.remove(chessai.core.action.ProposeDrawAction())
+
         if (state.turn == self.player):
             # We are considering ourselves, get the max.
             return self.minimax_step_max(state, ply_count, legal_actions, alpha, beta)

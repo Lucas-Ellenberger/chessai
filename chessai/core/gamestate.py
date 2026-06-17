@@ -153,7 +153,7 @@ class GameState(edq.util.json.DictConverter):
 
         return legal_actions.copy()
 
-    def get_legal_move_actions(self) -> list[chessai.core.action.MoveAction]:
+    def get_legal_move_actions(self) -> list[chessai.core.action.Action]:
         """ Get the list of legal actions, without any meta actions. """
 
         legal_actions = self.get_legal_actions()
@@ -168,7 +168,7 @@ class GameState(edq.util.json.DictConverter):
         return self.board.is_capture(action)
 
     def get_neighbors(self,
-                      start_coordinate: chessai.core.coordinate.Coordinate
+            start_coordinate: chessai.core.coordinate.Coordinate
             ) -> list[tuple[chessai.core.action.Action, chessai.core.coordinate.Coordinate]]:
         """ Get coordinates that the piece at the given coordinate can reach legally, and the action it would take to get there. """
 
@@ -548,8 +548,9 @@ class GameState(edq.util.json.DictConverter):
         return False
 
     def _process_special_move(self,
-                              action: chessai.core.action.Action,
-                              piece: chessai.core.piece.Piece) -> tuple[bool, chessai.core.coordinate.Coordinate | None]:
+            action: chessai.core.action.Action,
+            piece: chessai.core.piece.Piece,
+            ) -> tuple[bool, chessai.core.coordinate.Coordinate | None]:
         """ A helper function that allows gamestates to do any additional processing for special moves. """
 
         return False, None
@@ -576,7 +577,8 @@ class GameState(edq.util.json.DictConverter):
     def generate_successor(self,
             action: chessai.core.action.Action,
             rng: random.Random | None = None,
-            **kwargs: typing.Any) -> 'GameState':
+            **kwargs: typing.Any,
+            ) -> 'GameState':
         """
         Create a new deep copy of this state that represents the current agent taking the given action.
         To just apply an action to the current state, use process_turn().
@@ -597,7 +599,9 @@ class GameState(edq.util.json.DictConverter):
         This will initialize some state.
         """
 
-    def agents_game_start(self, agent_responses: dict[chessai.core.types.Color, chessai.core.agentaction.AgentActionRecord]) -> None:
+    def agents_game_start(self,
+            agent_responses: dict[chessai.core.types.Color, chessai.core.agentaction.AgentActionRecord],
+            ) -> None:
         """ Indicate that agents have been started. """
 
     def game_complete(self) -> tuple[list[chessai.core.types.Color], float]:

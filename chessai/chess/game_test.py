@@ -211,7 +211,7 @@ class GameTest(edq.testing.unittest.BaseTest):
         temp_dir = edq.util.dirent.get_temp_dir(prefix = 'chessai-test-')
         replay_path = os.path.join(temp_dir, 'test.replay')
 
-        expected_score = 0
+        expected_score = 0.5
 
         # Run a short capture game and save the replay.
         argv = [

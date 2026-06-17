@@ -181,6 +181,9 @@ class GameState(chessai.core.gamestate.GameState):
         if (not isinstance(action, chessai.core.action.MoveAction)):
             return False, None
 
+        # Update castling rights.
+        self._update_castling_rights(action, piece)
+
         # Handle promoting pieces.
         if isinstance(action, chessai.core.action.PromotionAction):
             self._handle_promotion(action, piece)
@@ -312,9 +315,6 @@ class GameState(chessai.core.gamestate.GameState):
 
         # Move the rook for castling.
         self.board.push(rook_action)
-
-        # Update castling rights, based on the action.
-        self._update_castling_rights(action, piece)
 
     def _handle_en_passant(self,
                            action: chessai.core.action.MoveAction,

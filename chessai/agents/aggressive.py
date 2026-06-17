@@ -11,7 +11,14 @@ class AggressiveAgent(chessai.core.agent.Agent):
         Returns a stochastic aggressive action based on the game state.
         """
 
-        legal_actions = state.get_legal_actions()
+        # Prioritize movement actions.
+        legal_actions = state.get_legal_move_actions()
+
+        # Fall back to all legal actions if there are no legal movement actions.
+        if (len(legal_actions) == 0):
+            legal_actions = state.get_legal_actions()
+
+        # Introduce stochasticity into the aggressive agent.
         self.rng.shuffle(legal_actions)
         for action in legal_actions:
             if (state.is_capture(action)):
