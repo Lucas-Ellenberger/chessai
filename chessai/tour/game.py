@@ -7,6 +7,7 @@ import chessai.core.board
 import chessai.core.game
 import chessai.core.gamestate
 import chessai.tour.gamestate
+import chessai.tour.piece
 
 class Game(chessai.core.game.Game):
     """
@@ -52,6 +53,9 @@ class Game(chessai.core.game.Game):
             self.search_targets = initial_state.search_targets
         else:
             initial_state = chessai.tour.gamestate.GameState.from_fen(fen = fen, search_targets = self.search_targets)
+
+        for search_target in self.search_targets:
+            initial_state.board.set(chessai.tour.piece.Target(initial_state.turn.opposite()), search_target)
 
         return initial_state
 

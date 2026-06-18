@@ -3,13 +3,13 @@
     "arguments": [
         "--seed", "4",
         "--ui", "null",
-        "--search-targets", "a1",
+        "--search-targets", "a2",
         "--max-moves", "100"
     ]
 }
 ---
-<LOG_PREFIX> -- Average Score: 470.00
-<LOG_PREFIX> -- Scores:        470
+<LOG_PREFIX> -- Average Score: 461.00
+<LOG_PREFIX> -- Scores:        461
 <LOG_PREFIX> -- Record:        Win
-<LOG_PREFIX> -- Average Moves: 79.0
-<LOG_PREFIX> -- Move Counts:   79
+<LOG_PREFIX> -- Average Moves: 97.0
+<LOG_PREFIX> -- Move Counts:   97

@@ -224,6 +224,16 @@ class GameState(edq.util.json.DictConverter):
 
         return False
 
+    def is_variant_win(self) -> bool:
+        """ Determines if the game is a win due to a variant rule. """
+
+        return False
+
+    def is_variant_loss(self) -> bool:
+        """ Determines if the game is a loss due to a variant rule. """
+
+        return False
+
     def is_game_over(self) -> bool:
         """ Returns whether the game is over according to the board rules. """
 
@@ -237,6 +247,12 @@ class GameState(edq.util.json.DictConverter):
             return True
 
         if (self.is_insufficient_material()):
+            return True
+
+        if (self.is_variant_win()):
+            return True
+
+        if (self.is_variant_loss()):
             return True
 
         return False
@@ -274,6 +290,12 @@ class GameState(edq.util.json.DictConverter):
 
         if (isinstance(self.get_previous_action(), chessai.core.action.AcceptDrawAction)):
             return chessai.core.types.TerminationReason.ACCEPTED_DRAW_PROPOSAL
+
+        if (self.is_variant_win()):
+            return chessai.core.types.TerminationReason.VARIANT_WIN
+
+        if (self.is_variant_loss()):
+            return chessai.core.types.TerminationReason.VARIANT_LOSS
 
         if (not self.is_game_over()):
             return chessai.core.types.TerminationReason.IN_PROGRESS

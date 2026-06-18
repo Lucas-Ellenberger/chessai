@@ -39,11 +39,17 @@ class TerminationReason(enum.StrEnum):
     FORFEIT = 'Forfeit'
     """ An agent forfeited the match via chessai.core.action.ForfeitAction(). """
 
-    ACCEPTED_DRAW_PROPOSAL = 'Accepted draw proposal.'
+    ACCEPTED_DRAW_PROPOSAL = 'Accepted Draw Proposal.'
     """ Agents agreed to draw via draw proposals. """
 
     IN_PROGRESS = 'In Progress'
     """ Indicates the game is still in progress (i.e., it has not yet terminated). """
+
+    VARIANT_WIN = 'Variant Win'
+    """ See chessai.core.gamestate.GameState.is_variant_win(). """
+
+    VARIANT_LOSS = 'Variant Loss'
+    """ See chessai.core.gamestate.GameState.is_variant_loss(). """
 
     UNKNOWN = 'Unknown'
     """ The termination reason is unknown. """

@@ -77,6 +77,21 @@ class GameState(chessai.chess.gamestate.GameState):
     def is_stalemate(self) -> bool:
         return False
 
+    def is_insufficient_material(self) -> bool:
+        return False
+
+    def is_variant_win(self) -> bool:
+        if (self.is_game_over() and (self.score > 0)):
+            return True
+
+        return False
+
+    def is_variant_loss(self) -> bool:
+        if (self.is_game_over() and (self.score <= 0)):
+            return True
+
+        return False
+
     def get_legal_actions(self) -> list[chessai.core.action.Action]:
         tour_actions: list[chessai.core.action.Action] = []
 

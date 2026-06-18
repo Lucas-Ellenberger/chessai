@@ -332,28 +332,31 @@ def _parse_fen_pieces(
     known_piece_symbols = chessai.core.piece.get_registered_piece_symbols()
     pieces: dict[chessai.core.coordinate.Coordinate, chessai.core.piece.Piece] = {}
 
+    # A regular expression to find series of digits (empty squares) and pieces, which are each a single non-digit character.
+    fen_token_re = re.compile(r'\d+|[^\d]')
+
     for (rank_index, rank_str) in enumerate(ranks):
         # FEN rank 8 is index 0 in the string, which is rank 7 in [0, 7].
         rank = (num_ranks - 1) - rank_index
         file = 0
 
-        for char in rank_str:
-            if (char.isdigit()):
-                file += int(char)
-            elif (char in known_piece_symbols):
+        for fen_token in fen_token_re.findall(rank_str):
+            if (fen_token.isdigit()):
+                file += int(fen_token)
+            elif (fen_token in known_piece_symbols):
                 if (file >= num_files):
-                    raise ValueError(f"Too many pieces on rank {rank + 1} in FEN: '{piece_field}'.")
+                    raise ValueError(f"Too many pieces on rank {rank + 1} in FEN: '{rank_str}'.")
 
                 coordinate = chessai.core.coordinate.Coordinate(file, rank)
-                pieces[coordinate] = chessai.core.piece.get_registered_piece(char)
+                pieces[coordinate] = chessai.core.piece.get_registered_piece(fen_token)
                 file += 1
             else:
-                raise ValueError(f"Unknown character '{char}' in FEN piece field: '{piece_field}'.")
+                raise ValueError(f"Unknown character '{fen_token}' in FEN piece field: '{rank_str}'.")
 
         if (file != num_files):
             raise ValueError(
                 f"Rank {rank + 1} has {file} files, expected"
-                + f" {num_files}: '{piece_field}'."
+                + f" {num_files}: '{rank_str}'."
             )
 
     return pieces
