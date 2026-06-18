@@ -391,10 +391,12 @@ class Game(abc.ABC):
             **kwargs
         )
 
-    def to_pgn(self, final_state: chessai.core.gamestate.GameState) -> str:
+    def to_pgn(self,
+            final_state: chessai.core.gamestate.GameState,
+            termination_reason: chessai.core.types.TerminationReason,
+            ) -> str:
         """ Returns the PGN representation of the Game. """
 
-        termination_reason = final_state.get_termination_reason()
         if (termination_reason in [chessai.core.types.TerminationReason.CHECKMATE,
                                    chessai.core.types.TerminationReason.FORFEIT]):
             winners = final_state.get_winners()
@@ -448,12 +450,14 @@ class Game(abc.ABC):
         # The agent has timed out.
         if (action_record.timeout):
             result.timeout_agent_teams.append(action_record.player)
+            result.termination_reason = chessai.core.types.TerminationReason.AGENT_TIMEOUT
             state.process_agent_timeout(action_record.player)
             return state
 
         # The agent has crashed.
         if (action_record.crashed):
             result.crash_agent_teams.append(action_record.player)
+            result.termination_reason = chessai.core.types.TerminationReason.AGENT_CRASHED
             state.process_agent_crash(action_record.player)
             return state
 
@@ -524,9 +528,11 @@ class Game(abc.ABC):
             if (record.timeout):
                 result.timeout_agent_teams.append(record.player)
                 state.process_agent_timeout(record.player)
+                result.termination_reason = chessai.core.types.TerminationReason.AGENT_TIMEOUT
             elif (record.crashed):
                 result.crash_agent_teams.append(record.player)
                 state.process_agent_crash(record.player)
+                result.termination_reason = chessai.core.types.TerminationReason.AGENT_CRASHED
             else:
                 continue
                 # board_highlights += record.get_board_highlights()
@@ -567,6 +573,7 @@ class Game(abc.ABC):
             if ((self.game_info.max_moves > 0) and (len(result.history) >= self.game_info.max_moves)):
                 state.process_game_timeout()
                 result.game_timeout = True
+                result.termination_reason = chessai.core.types.TerminationReason.GAME_TIMEOUT
                 break
 
         # Mark the end time of the game.
@@ -577,7 +584,9 @@ class Game(abc.ABC):
         result.winning_agent_teams += winners
         result.score = score
 
-        result.termination_reason = state.get_termination_reason()
+        if (result.termination_reason is None):
+            result.termination_reason = state.get_termination_reason()
+
         result.end_fen = state.get_fen()
 
         # Notify agents about the end of this game.
@@ -587,7 +596,7 @@ class Game(abc.ABC):
         self.game_complete(state, result)
 
         # Update the UI.
-        ui.game_complete(state)
+        ui.game_complete(state, result.termination_reason)
 
         # Cleanup
         isolator.close()
@@ -596,7 +605,7 @@ class Game(abc.ABC):
         if ((not self._is_replay) and (self._save_path is not None)):
             logging.info("Saving results to '%s'.", self._save_path)
 
-            pgn = self.to_pgn(state)
+            pgn = self.to_pgn(state, result.termination_reason)
             edq.util.dirent.write_file(self._save_path, pgn)
 
         return result

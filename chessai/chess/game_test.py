@@ -231,6 +231,7 @@ class GameTest(edq.testing.unittest.BaseTest):
         argv = [
             '--replay-path', replay_path,
             '--ui', 'null',
+            '--max-moves', '50',
             '--log-level', 'CRITICAL',
         ]
         results = chessai.chess.bin.main(argv = argv)

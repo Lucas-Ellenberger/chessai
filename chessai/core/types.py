@@ -45,6 +45,15 @@ class TerminationReason(enum.StrEnum):
     IN_PROGRESS = 'In Progress'
     """ Indicates the game is still in progress (i.e., it has not yet terminated). """
 
+    AGENT_CRASHED = 'Agent Crashed'
+    """ Indicates an agent crashed, ending the game. """
+
+    AGENT_TIMEOUT = 'Agent Timeout'
+    """ An agent took to long to respond, ending the game. """
+
+    GAME_TIMEOUT = 'Game Timeout'
+    """ The maximum number of moves in the game was reached. """
+
     VARIANT_WIN = 'Variant Win'
     """ See chessai.core.gamestate.GameState.is_variant_win(). """
 

@@ -41,7 +41,11 @@ class TextUI(chessai.core.ui.UI):
         self._horizontal_border: str | None = None
         """ The horizontal border to be displayed between each rank. """
 
-    def draw(self, state: chessai.core.gamestate.GameState, check_game_over: bool = False, **kwargs: typing.Any) -> None:
+    def draw(self,
+            state: chessai.core.gamestate.GameState,
+            termination_reason: chessai.core.types.TerminationReason | None = None,
+            **kwargs: typing.Any,
+            ) -> None:
         if (state.get_previous_action() == chessai.core.action.NoneAction()):
             return
 
@@ -71,9 +75,9 @@ class TextUI(chessai.core.ui.UI):
         if (action is not None):
             self._output_stream.write(f"Previous action: '{action}'.\n")
 
-        if ((state.game_over) or (check_game_over and (state.is_game_over()))):
+        if (termination_reason is not None):
             self._output_stream.write('Game Over!\n')
-            self._output_stream.write(f"Termination Reason: '{state.get_termination_reason()}'.\n")
+            self._output_stream.write(f"Termination Reason: '{termination_reason}'.\n")
 
         self._output_stream.write('\n')
         self._output_stream.flush()

@@ -17,14 +17,14 @@ class UI(abc.ABC):
 
     def update(self,
             state: chessai.core.gamestate.GameState,
-            check_game_over: bool = False,
+            termination_reason: chessai.core.types.TerminationReason | None = None,
             ) -> None:
         """
         Update the UI with the current state of the game.
         This is the main entry point for the game into the UI.
         """
 
-        self.draw(state, check_game_over = check_game_over)
+        self.draw(state, termination_reason = termination_reason)
 
         self._update_count += 1
 
@@ -37,10 +37,11 @@ class UI(abc.ABC):
 
     def game_complete(self,
             final_state: chessai.core.gamestate.GameState,
+            termination_reason: chessai.core.types.TerminationReason,
             ) -> None:
         """ Update the UI with the game's final state. """
 
-        self.update(final_state, check_game_over = True)
+        self.update(final_state, termination_reason)
 
     def close(self) -> None:
         """ Close the UI and release all owned resources. """
