@@ -475,10 +475,11 @@ class Game(abc.ABC):
     def _call_state_process_turn_full(self,
             state: chessai.core.gamestate.GameState,
             action: chessai.core.action.Action,
-            rng: random.Random) -> None:
+            rng: random.Random,
+            **kwargs: typing.Any) -> None:
         """ Call on the game state to process a full turn. """
 
-        state.process_turn_full(action, rng)
+        state.process_turn_full(action, rng, **kwargs)
 
     def check_end(self, state: chessai.core.gamestate.GameState) -> bool:
         """

@@ -37,6 +37,7 @@ class GameState(chessai.chess.gamestate.GameState):
                  seed: int = -1,
                  game_over: bool = False,
                  search_targets: list[chessai.core.coordinate.Coordinate] | dict[str, typing.Any] | None = None,
+                 _search_agent: chessai.core.types.Color | None = None,
                  _validate_search_targets: bool = True,
                  **kwargs: typing.Any) -> None:
         super().__init__(board, turn, castling_rights, en_passant_coordinate,
@@ -60,6 +61,13 @@ class GameState(chessai.chess.gamestate.GameState):
 
         self.search_targets: list[chessai.core.coordinate.Coordinate] = search_targets
         """ The targets of the piece tour search. """
+
+        search_agent = self.turn
+        if (_search_agent is not None):
+            search_agent = _search_agent
+
+        self.search_agent = search_agent
+        """ The agent solving the tour search. """
 
         # A Tour problem must have at least one search target.
         if (_validate_search_targets and (len(self.search_targets) == 0)):
@@ -97,7 +105,7 @@ class GameState(chessai.chess.gamestate.GameState):
 
         legal_actions = super().get_legal_actions()
         for action in legal_actions:
-            # Tour agents cannot only perform movement actions.
+            # Tour agents can only perform movement actions and the none action.
             if (not isinstance(action, chessai.core.action.MoveAction)):
                 continue
 
@@ -107,6 +115,9 @@ class GameState(chessai.chess.gamestate.GameState):
                 continue
 
             tour_actions.append(action)
+
+        # Tour agents are allowed to stay still, as they lose points every turn.
+        tour_actions.append(chessai.core.action.NoneAction())
 
         return tour_actions
 
@@ -124,15 +135,10 @@ class GameState(chessai.chess.gamestate.GameState):
     def process_turn(self,
             action: chessai.core.action.Action,
             rng: random.Random | None = None,
+            search_agent: chessai.core.types.Color = chessai.core.types.Color.WHITE,
             **kwargs: typing.Any) -> None:
-        """
-        Process the current agent's turn with the given action.
-        This may modify the current state.
-        To get a copy of a potential successor state, use generate_successor().
-        """
-
-        # Simply progress the turn with the null action.
-        if (self.turn == chessai.core.types.Color.BLACK):
+        # Progress the state if it is not the search agent.
+        if (self.turn != search_agent):
             self._progress_state(action, False)
             return
 
@@ -159,15 +165,21 @@ class GameState(chessai.chess.gamestate.GameState):
             self.score += CRASH_POINTS
 
     def game_complete(self) -> tuple[list[chessai.core.types.Color], float]:
-        # The agent wins if they reach all of the search targets.
+        """
+        Determine the outcome of the tour.
+
+        The tour agent wins if they reach all search targets.
+        Otherwise the agent loses.
+        """
+
         if (len(self.search_targets) == 0):
             self.score += BOARD_CLEAR_POINTS
 
-            return ([chessai.core.types.Color.WHITE], self.score)
+            return ([self.search_agent], self.score)
 
         self.score += LOSE_POINTS
 
-        return ([chessai.core.types.Color.BLACK], self.score)
+        return ([self.search_agent.opposite()], self.score)
 
     def copy(self) -> 'GameState':
         new_state = GameState(board           = self.board.copy(),
@@ -180,6 +192,7 @@ class GameState(chessai.chess.gamestate.GameState):
                               seed            = self.seed,
                               game_over       = self.game_over,
                               search_targets  = self.search_targets.copy(),
+                              search_agent    = self.search_agent,
                               _validate_search_targets = False)
 
         new_state.score = self.score

@@ -3,7 +3,7 @@
     "arguments": [
         "--seed", "4",
         "--ui", "null",
-        "--agent", "agent-search-problem",
+        "--white-team", "agent-search-problem",
         "--agent-arg", "white::solver=search-solver-astar",
         "--max-moves", "100"
     ]

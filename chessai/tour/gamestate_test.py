@@ -16,22 +16,23 @@ class GameStateTest(edq.testing.unittest.BaseTest):
         test_cases: list[tuple[str, list[str], bool, bool]] = [
             (
                 'tour-base',
-                ['a1b3', 'a1c2'],
+                ['0000', 'a1b3', 'a1c2'],
                 False,
                 False,
             ),
             (
                 'tour-multi',
                 [
-                    'd4b3', 'd4b5', 'd4c2', 'd4c6',
-                    'd4e2', 'd4e6', 'd4f3', 'd4f5',
+                    '0000', 'd4b3', 'd4b5',
+                    'd4c2', 'd4c6', 'd4e2',
+                    'd4e6', 'd4f3', 'd4f5',
                 ],
                 False,
                 False,
             ),
             (
                 'tour-rocks',
-                ['a1c2'],
+                ['0000', 'a1c2'],
                 False,
                 False,
             ),

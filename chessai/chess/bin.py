@@ -15,12 +15,12 @@ def set_cli_args(parser: argparse.ArgumentParser, **kwargs: typing.Any) -> argpa
     This is a sibling to init_from_args(), as the arguments set here can be interpreted there.
     """
 
-    parser.add_argument('--white-team', dest = 'white_team', metavar = 'TEAM_CREATION_FUNC',
+    parser.add_argument('--white-team', dest = 'white_team',
             action = 'store', type = str, default = chessai.util.alias.AGENT_RANDOM.short,
             help = ('Select the chess team that will play on the white team (default: %(default)s).'
                     + f' Builtin teams: {chessai.util.alias.AGENT_SHORT_NAMES}.'))
 
-    parser.add_argument('--black-team', dest = 'black_team', metavar = 'TEAM_CREATION_FUNC',
+    parser.add_argument('--black-team', dest = 'black_team',
             action = 'store', type = str, default = chessai.util.alias.AGENT_RANDOM.short,
             help = ('Select the chess team that will play on the black team (default: %(default)s).'
                     + f' Builtin teams: {chessai.util.alias.AGENT_SHORT_NAMES}.'))
