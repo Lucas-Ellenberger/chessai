@@ -79,6 +79,7 @@ AGENT_SHORT_NAMES: list[str] = [
     AGENT_DUMMY.short,
     AGENT_MINIMAX.short,
     AGENT_MULTI_SCRIPTED.short,
+    AGENT_GAURD.short,
     AGENT_GREEDY.short,
     AGENT_RANDOM.short,
     AGENT_SCRIPTED.short,
