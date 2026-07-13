@@ -77,6 +77,13 @@ class GameState(chessai.chess.gamestate.GameState):
         if (self.game_over):
             return True
 
+        # Check if the search agent has any remaining moves, besides the none action.
+        if (self.turn == self.search_agent):
+            legal_actions = self.get_legal_actions()
+            if ((len(legal_actions) == 1) and
+                    (isinstance(legal_actions[0], chessai.core.action.NoneAction))):
+                return True
+
         return (len(self.search_targets) == 0)
 
     def is_checkmate(self) -> bool:
@@ -135,14 +142,15 @@ class GameState(chessai.chess.gamestate.GameState):
     def process_turn(self,
             action: chessai.core.action.Action,
             rng: random.Random | None = None,
-            search_agent: chessai.core.types.Color = chessai.core.types.Color.WHITE,
             **kwargs: typing.Any) -> None:
-        # Progress the state if it is not the search agent.
-        if (self.turn != search_agent):
-            self._progress_state(action, False)
-            return
+        # Only update the score when it is the search agents turn.
+        if (self.turn == self.search_agent):
+            self._update_targets_and_score(action)
 
         self.push(action)
+
+    def _update_targets_and_score(self, action: chessai.core.action.Action) -> None:
+        """ Update the remaining targets and score based on the search agents action. """
 
         if isinstance(action, chessai.core.action.MoveAction):
             destination_coordinate = action.end_coordinate

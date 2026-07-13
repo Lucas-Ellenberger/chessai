@@ -1,0 +1,18 @@
+{
+    "cli": "chessai.tour.bin",
+    "arguments": [
+        "--seed", "4",
+        "--ui", "null",
+        "--board", "gaurded-tour",
+        "--max-moves", "100",
+        "--white", "agent-multi-scripted",
+        "--black", "agent-gaurd",
+        "--agent-arg", "white::move_lines=[[\"d5g5\"]]"
+    ]
+}
+---
+<LOG_PREFIX> -- Average Score: -491.00
+<LOG_PREFIX> -- Scores:        -491
+<LOG_PREFIX> -- Record:        Loss
+<LOG_PREFIX> -- Average Moves: 2.0
+<LOG_PREFIX> -- Move Counts:   2
