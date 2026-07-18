@@ -17,6 +17,7 @@ DEFAULT_FEN: str = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 
 _KNOWN_LEGAL_ACTIONS: dict[str, list[chessai.core.action.Action]] = {}
 
+# edq.util.serial.DictConverter
 class GameState(edq.util.json.DictConverter):
     """
     The base for all game states in chessai.
@@ -700,9 +701,11 @@ class GameState(edq.util.json.DictConverter):
 
     def to_dict(self) -> dict[str, typing.Any]:
         return {
+            # It will auto understand how to call the board's to dict
             'board':            self.board.to_dict(),
             'turn':             self.turn,
             'castling_rights':  self.castling_rights,
+            # Can do or None, as long as it knows coordinates
             'en_passant_coordinate': self.en_passant_coordinate.to_dict() if (self.en_passant_coordinate is not None) else None,
             'halfmove_clock':   self.halfmove_clock,
             'fullmove_number':  self.fullmove_number,
@@ -738,6 +741,7 @@ class GameState(edq.util.json.DictConverter):
         )
 
     @classmethod
+    # TODO: Should be able to remove
     def from_fen(cls,
                  fen: str | None = None,
                  previous_action: chessai.core.action.Action | None = None,
