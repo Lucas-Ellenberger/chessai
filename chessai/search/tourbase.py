@@ -3,7 +3,7 @@ import typing
 
 import chessai.core.search
 
-def piece_tour_search(
+def tour_base_search(
         problem: chessai.core.search.SearchProblem,
         heuristic: chessai.core.search.SearchHeuristic,
         rng: random.Random,

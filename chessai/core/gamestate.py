@@ -91,8 +91,28 @@ class GameState(edq.util.json.DictConverter):
 
         return self.board.get(coordinate.file, coordinate.rank)
 
+    def get_coordinate_map(self, color: chessai.core.types.Color | None = None,
+                           ) -> dict[chessai.core.coordinate.Coordinate, chessai.core.piece.Piece]:
+        """
+        Get the locations and pieces that are on the board.
+        Providing a color will filter the results to only include pieces of that color.
+        """
+
+        pieces = self.board.get_coordinate_map()
+        if (color is None):
+            return pieces
+
+        filtered_pieces = {}
+        for (coordinate, piece) in pieces.items():
+            if (piece.color != color):
+                continue
+
+            filtered_pieces[coordinate] = piece
+
+        return filtered_pieces
+
     def get_previous_action(self) -> chessai.core.action.Action | None:
-        """ Returns the most recent move taken. """
+        """ Returns the most recent action taken. """
 
         return self.previous_action
 

@@ -131,7 +131,7 @@ SEARCH_PROBLEM_SHORT_NAMES: list[str] = [
 SEARCH_SOLVER_ASTAR: Alias = Alias('search-solver-astar', 'chessai.student.singlesearch.astar_search')
 SEARCH_SOLVER_BFS: Alias = Alias('search-solver-bfs', 'chessai.student.singlesearch.breadth_first_search')
 SEARCH_SOLVER_DFS: Alias = Alias('search-solver-dfs', 'chessai.student.singlesearch.depth_first_search')
-SEARCH_SOLVER_PIECE_TOUR: Alias = Alias('search-solver-piece-tour', 'chessai.search.piecetour.piece_tour_search')
+SEARCH_SOLVER_TOUR_BASE: Alias = Alias('search-solver-tour-base', 'chessai.search.tourbase.tour_base_search')
 SEARCH_SOLVER_RANDOM: Alias = Alias('search-solver-random', 'chessai.search.random.random_search')
 SEARCH_SOLVER_UCS: Alias = Alias('search-solver-ucs', 'chessai.student.singlesearch.uniform_cost_search')
 
@@ -139,7 +139,7 @@ SEARCH_SOLVER_SHORT_NAMES: list[str] = [
     SEARCH_SOLVER_ASTAR.short,
     SEARCH_SOLVER_BFS.short,
     SEARCH_SOLVER_DFS.short,
-    SEARCH_SOLVER_PIECE_TOUR.short,
+    SEARCH_SOLVER_TOUR_BASE.short,
     SEARCH_SOLVER_RANDOM.short,
     SEARCH_SOLVER_UCS.short,
 ]

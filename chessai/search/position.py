@@ -72,12 +72,14 @@ class PositionSearchProblem(chessai.core.search.SearchProblem[PositionSearchNode
         self.goal_positions: list[chessai.core.coordinate.Coordinate] = goal_positions
         """ The positions to search for. """
 
-        print("Position search problem got:", self.goal_positions)
-
         if (start_position is None):
-            all_coordinates = self.state.board.all_coordinates()
-            if (len(all_coordinates) > 0):
-                start_position = all_coordinates[0]
+            all_coordinates = self.state.get_coordinate_map(self.state.search_agent)
+            for (coordinate, piece) in all_coordinates.items():
+                if isinstance(piece, chessai.tour.piece.Rock):
+                    continue
+
+                start_position = coordinate
+                break
 
         if (start_position is None):
             raise ValueError("Could not find starting position.")
@@ -87,8 +89,6 @@ class PositionSearchProblem(chessai.core.search.SearchProblem[PositionSearchNode
 
         self.start_state: chessai.core.gamestate.GameState = self.state.copy()
         """ The board the problem started from. """
-
-        print("Position search problem got a starting position:", self.start_position)
 
         if (isinstance(cost_function, str)):
             cost_function = typing.cast(chessai.core.search.CostFunction, chessai.util.reflection.fetch(cost_function))
