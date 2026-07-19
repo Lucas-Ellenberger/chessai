@@ -359,6 +359,14 @@ class GameState(chessai.core.gamestate.GameState):
         if ((king_coordinate is None) or (king_coordinate.rank != back_rank)):
             return []
 
+        # Get the coordinates that the opponent can attack,
+        # as a castling move cannot pass through a square that is attacked.
+        attacked_coordinates = self.get_attacked_coordinates(self.turn.opposite())
+
+        # The king cannot castle if it is being attacked.
+        if (king_coordinate in attacked_coordinates):
+            return []
+
         actions: list[chessai.core.action.MoveAction] = []
 
         # Add Kingside castling.
@@ -367,13 +375,17 @@ class GameState(chessai.core.gamestate.GameState):
             rook_piece = self.get(rook_cordinate)
 
             # Check that the files to the right of the king and left of the rook are empty.
-            all_empty = True
+            all_safe = True
             file = king_coordinate.file + 1
             while (file < rook_cordinate.file):
                 empty_coord = chessai.core.coordinate.Coordinate(file, back_rank)
 
+                if (empty_coord in attacked_coordinates):
+                    all_safe = False
+                    break
+
                 if (self.board.has_piece(empty_coord)):
-                    all_empty = False
+                    all_safe = False
                     break
 
                 file = file + 1
@@ -381,7 +393,7 @@ class GameState(chessai.core.gamestate.GameState):
             if ((rook_piece is not None)
                     and (isinstance(rook_piece, chessai.chess.piece.Rook))
                     and (rook_piece.color == self.turn)
-                    and (all_empty)):
+                    and (all_safe)):
                 king_dest = chessai.core.coordinate.Coordinate((self.board.num_files - 2), back_rank)
                 actions.append(chessai.core.action.MoveAction(king_coordinate, king_dest))
 
@@ -391,13 +403,17 @@ class GameState(chessai.core.gamestate.GameState):
             rook_piece = self.get(rook_cordinate)
 
             # Check that the files to the right of the king and left of the rook are empty.
-            all_empty = True
+            all_safe = True
             file = king_coordinate.file - 1
             while (file > 0):
                 empty_coord = chessai.core.coordinate.Coordinate(file, back_rank)
 
+                if (empty_coord in attacked_coordinates):
+                    all_safe = False
+                    break
+
                 if (self.board.has_piece(empty_coord)):
-                    all_empty = False
+                    all_safe = False
                     break
 
                 file = file - 1
@@ -405,7 +421,7 @@ class GameState(chessai.core.gamestate.GameState):
             if ((rook_piece is not None)
                     and (isinstance(rook_piece, chessai.chess.piece.Rook))
                     and (rook_piece.color == self.turn)
-                    and (all_empty)):
+                    and (all_safe)):
                 king_dest = chessai.core.coordinate.Coordinate(2, back_rank)
                 actions.append(chessai.core.action.MoveAction(king_coordinate, king_dest))
 

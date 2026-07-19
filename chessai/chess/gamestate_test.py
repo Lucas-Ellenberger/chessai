@@ -150,6 +150,29 @@ class GameStateTest(edq.testing.unittest.BaseTest):
                 False,
                 True,
             ),
+            (
+                'r3k2r/8/8/7B/8/2n4n/8/R3K2R w KQkq - 0 1',
+                [
+                    'a1a2', 'a1a3', 'a1a4', 'a1a5',
+                    'a1a6', 'a1a7', 'a1a8', 'a1b1',
+                    'a1c1', 'a1d1', 'e1d2', 'e1f1',
+                    'h1f1', 'h1g1', 'h1h2', 'h1h3',
+                    'h5d1', 'h5e2', 'h5e8', 'h5f3',
+                    'h5f7', 'h5g4', 'h5g6',
+                    'Propose Draw', 'Forfeit',
+                ],
+                False,
+                False,
+            ),
+            (
+                'r3k2r/8/8/7B/8/2n4n/8/R3K2R b KQkq - 0 1',
+                [
+                    'e8d7', 'e8d8', 'e8e7', 'e8f8',
+                    'h8h5', 'Propose Draw', 'Forfeit',
+                ],
+                False,
+                False,
+            ),
         ]
 
         for (i, test_case) in enumerate(test_cases):

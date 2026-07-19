@@ -17,7 +17,6 @@ DEFAULT_FEN: str = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 
 _KNOWN_LEGAL_ACTIONS: dict[str, list[chessai.core.action.Action]] = {}
 
-# edq.util.serial.DictConverter
 class GameState(edq.util.json.DictConverter):
     """
     The base for all game states in chessai.
@@ -187,6 +186,49 @@ class GameState(edq.util.json.DictConverter):
             return False
 
         return self.board.is_capture(action)
+
+    def get_attacked_coordinates(self,
+                                 color: chessai.core.types.Color,
+                                 ) -> dict[chessai.core.coordinate.Coordinate, int]:
+        """
+        Returns the coordinates that the given color can attack,
+        ignoring if that player is in check or would leave them in check.
+        """
+
+        attacked_coordinates = {}
+        for (file, rank_dict) in self.board.pieces.items():
+            for (rank, piece) in rank_dict.items():
+                if (piece.color != color):
+                    continue
+
+                for movement_vector in piece.move_vectors():
+                    # Push movement types cannot attack a coordinate.
+                    if (movement_vector.kind == chessai.core.piece.MoveKind.PUSH):
+                        break
+
+                    current_rank = rank
+                    current_file = file
+
+                    num_repetitions = movement_vector.num_repetitions
+                    while (num_repetitions != 0):
+                        current_file += movement_vector.file_delta
+                        current_rank += movement_vector.rank_delta
+                        if (not self.board.is_within_bounds(current_file, current_rank)):
+                            break
+
+                        current_coordinate = chessai.core.coordinate.Coordinate(current_file, current_rank)
+                        if (current_coordinate not in attacked_coordinates):
+                            attacked_coordinates[current_coordinate] = 1
+                        else:
+                            attacked_coordinates[current_coordinate] += 1
+
+                        occupant = self.board.get(current_file, current_rank)
+                        if (occupant is not None):
+                            break
+
+                        num_repetitions -= 1
+
+        return attacked_coordinates
 
     def get_neighbors(self,
             start_coordinate: chessai.core.coordinate.Coordinate
@@ -761,7 +803,6 @@ class GameState(edq.util.json.DictConverter):
         )
 
     @classmethod
-    # TODO: Should be able to remove
     def from_fen(cls,
                  fen: str | None = None,
                  previous_action: chessai.core.action.Action | None = None,

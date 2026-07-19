@@ -25,8 +25,6 @@ DEFAULT_BOARD_RANKS: int = 8
 
 DEFAULT_BOARD_SIZE: int = DEFAULT_BOARD_RANKS * DEFAULT_BOARD_FILES
 
-# edq.util.serial.PodConverter
-# Could use dict, but could serialize to a FEN
 class Board(edq.util.json.DictConverter):
     """ The board holds the current coordinates of pieces on the board. """
 
