@@ -3,7 +3,7 @@ build-backend = "setuptools.build_meta"
 requires = [
     "build",
     "packaging>=21.3",
-    "setuptools>=60",
+    "setuptools>=77.0.0",
     "setuptools-scm>=8.0",
     "twine",
     "vermin",
@@ -14,7 +14,7 @@ name = "chessai"
 description = "An AI educational project disguised as chess."
 readme = "README.md"
 requires-python = ">=3.11"
-license = {file = "LICENSE.md"}
+license-files = ["LICENSE", "LICENSE-chess", "LICENSE-code", "LICENSE-noncode"]
 
 authors = [
     {name = "Lucas Ellenberger", email = "lmellenb@ucsc.edu"},

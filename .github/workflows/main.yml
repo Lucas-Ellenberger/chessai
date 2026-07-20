@@ -146,7 +146,7 @@ jobs:
       - name: Deploy
         uses: casperdcl/deploy-pypi@10cf4cd83fc885003a8d4f37f93a5a0f0fc2d2f4  # v2.4.1
         with:
-          build: --sdist --wheel --outdir dist .
+          build: --sdist --wheel --outdir dist . --verbose
           # Only upload if a tag is pushed (otherwise just build & check).
           upload: ${{ github.event_name == 'push' && github.repository_owner == 'Lucas-Ellenberger' && startsWith(github.event.ref, 'refs/tags') }}
           password: ${{ secrets.PYPI_TOKEN }}
