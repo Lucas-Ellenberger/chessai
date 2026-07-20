@@ -14,7 +14,7 @@ name = "chessai"
 description = "An AI educational project disguised as chess."
 readme = "README.md"
 requires-python = ">=3.11"
-license-files = ["LICENSE", "LICENSE-chess", "LICENSE-code", "LICENSE-noncode"]
+license-files = ["LICENSE", "LICENSE-code", "LICENSE-noncode"]
 
 authors = [
     {name = "Lucas Ellenberger", email = "lmellenb@ucsc.edu"},

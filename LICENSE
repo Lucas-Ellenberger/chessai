@@ -4,8 +4,6 @@ The majority of this project is licensed under an [MIT license](LICENSE).
 Non-code portions of the code (e.g. images) under the [chessai/resources directory](/chessai/resources)
 are license under a [CC BY-SA 4.0 license](LICENSE-noncode).
 
-The Python chess library is used in this project, which is licensed under a [GNU GPL 3.0 license](LICENSE-chess).
-
 Additionally, solutions (implementations (full or partial) of the code in the [chessai/student directory](/chessai/student))
 should never be published or distributed.
 
