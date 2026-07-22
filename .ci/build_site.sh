@@ -47,7 +47,7 @@ function gen_docs() {
     ${GEN_DOCS_SCRIPT}
 
     # Add in the label to the landing pages.
-    local git_link="https://github.com/Lucas-Ellenberger/chessai/tree/${reference}"
+    local git_link="https://github.com/ucsc-cse-240/chessai/tree/${reference}"
 
     local index_title="<h1 style='flex-grow: 1'>Chessai API Reference: <a href='${git_link}'>${label}</a></h1>"
     sed -i "s#${INDEX_TITLE_LOCATION}#${INDEX_TITLE_LOCATION}${index_title}#" "${BUILD_DIR}/index.html"

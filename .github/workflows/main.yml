@@ -56,7 +56,7 @@ jobs:
 
   docs:
     needs: test
-    if: ${{ github.event_name == 'push' && github.repository_owner == 'Lucas-Ellenberger' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')) }}
+    if: ${{ github.event_name == 'push' && github.repository_owner == 'ucsc-cse-240' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')) }}
 
     permissions:
       contents: read
@@ -148,5 +148,5 @@ jobs:
         with:
           build: --sdist --wheel --outdir dist . --verbose
           # Only upload if a tag is pushed (otherwise just build & check).
-          upload: ${{ github.event_name == 'push' && github.repository_owner == 'Lucas-Ellenberger' && startsWith(github.event.ref, 'refs/tags') }}
+          upload: ${{ github.event_name == 'push' && github.repository_owner == 'ucsc-cse-240' && startsWith(github.event.ref, 'refs/tags') }}
           password: ${{ secrets.PYPI_TOKEN }}

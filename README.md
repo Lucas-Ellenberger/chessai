@@ -4,8 +4,7 @@ An AI educational project disguised as [Chess](https://en.wikipedia.org/wiki/Che
 
 ## Documentation
 
-TODO: Release documentation after first release.
-API documentation for all releases is available at [lucas-ellenberger.github.io/chessai](https://lucas-ellenberger.github.io/chessai).
+API documentation for all releases is available at [ucsc-cse-240.github.io/chessai](https://ucsc-cse-240.github.io/chessai).
 
 ## Installation / Requirements
 

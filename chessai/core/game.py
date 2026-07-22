@@ -757,7 +757,7 @@ def init_from_args(
             agent_action_timeout = args.agent_action_timeout,
             seed = game_seed,
             event = 'Casual Chessai Game',
-            site = 'https://github.com/Lucas-Ellenberger/chessai',
+            site = 'https://github.com/ucsc-cse-240/chessai',
             date = datetime.date.today().isoformat(),
             game_round = str(i),
             white_player = white_player,
