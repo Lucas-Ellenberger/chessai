@@ -1,13 +1,13 @@
 import typing
 
-import edq.util.json
+import edq.util.serial
 
 import chessai.util.alias
 import chessai.util.reflection
 
 DEFAULT_STATE_EVAL: str = chessai.util.alias.STATE_EVAL_BASE.long
 
-class AgentInfo(edq.util.json.DictConverter):
+class AgentInfo(edq.util.serial.DictConverter):
     """
     Argument used to construct an agent.
     Common arguments used by the engine are stored as top-level fields,
@@ -70,19 +70,3 @@ class AgentInfo(edq.util.json.DictConverter):
         result['state_eval_func'] = str(self.state_eval_func)
 
         return result
-
-    def to_dict(self) -> dict[str, typing.Any]:
-        data = vars(self).copy()
-        data['name'] = self.name.to_dict()
-        data['state_eval_func'] = self.state_eval_func.to_dict()
-        return data
-
-    @classmethod
-    def from_dict(cls, data: dict[str, typing.Any]) -> typing.Any:
-        data = data.copy()
-        data['name'] = chessai.util.reflection.Reference.from_dict(data['name'])
-
-        if ('state_eval_func' in data):
-            data['state_eval_func'] = chessai.util.reflection.Reference.from_dict(data['state_eval_func'])
-
-        return cls(**data)

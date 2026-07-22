@@ -8,7 +8,7 @@ import os
 import random
 import typing
 
-import edq.util.json
+import edq.util.serial
 
 import chessai.core.action
 import chessai.core.agentinfo
@@ -25,27 +25,28 @@ DEFAULT_AGENT_ACTION_TIMEOUT: float = 0.0
 
 DEFAULT_AGENT: str = chessai.util.alias.AGENT_RANDOM.short
 
-class GameInfo(edq.util.json.DictConverter):
+class GameInfo(edq.util.serial.DictConverter):
     """
     A simple container that holds common information about a game.
     """
 
     def __init__(self,
-                 agent_infos: dict[chessai.core.types.Color, chessai.core.agentinfo.AgentInfo],
-                 start_fen: str | None = None,
-                 isolation_level: chessai.core.isolation.level.Level = chessai.core.isolation.level.Level.NONE,
-                 max_moves: int = DEFAULT_MAX_MOVES,
-                 agent_start_timeout: float = DEFAULT_AGENT_START_TIMEOUT,
-                 agent_end_timeout: float = DEFAULT_AGENT_END_TIMEOUT,
-                 agent_action_timeout: float = DEFAULT_AGENT_ACTION_TIMEOUT,
-                 seed: int | None = None,
-                 event: str | None = None,
-                 site: str | None = None,
-                 date: str | None = None,
-                 game_round: str | None = None,
-                 white_player: str | None = None,
-                 black_player: str | None = None,
-                 extra_info: dict[str, typing.Any] | None = None) -> None:
+            agent_infos: dict[chessai.core.types.Color, chessai.core.agentinfo.AgentInfo],
+            start_fen: str | None = None,
+            isolation_level: chessai.core.isolation.level.Level = chessai.core.isolation.level.Level.NONE,
+            max_moves: int = DEFAULT_MAX_MOVES,
+            agent_start_timeout: float = DEFAULT_AGENT_START_TIMEOUT,
+            agent_end_timeout: float = DEFAULT_AGENT_END_TIMEOUT,
+            agent_action_timeout: float = DEFAULT_AGENT_ACTION_TIMEOUT,
+            seed: int | None = None,
+            event: str | None = None,
+            site: str | None = None,
+            date: str | None = None,
+            game_round: str | None = None,
+            white_player: str | None = None,
+            black_player: str | None = None,
+            extra_info: dict[str, typing.Any] | None = None,
+            ) -> None:
         if (seed is None):
             seed = random.randint(0, 2**64)
 
@@ -133,65 +134,25 @@ class GameInfo(edq.util.json.DictConverter):
         self.extra_info: dict[str, typing.Any] = extra_info
         """ Any additional arguments passed to the game. """
 
-    def to_dict(self) -> dict[str, typing.Any]:
-        return {
-            'agent_infos': {id: info.to_dict() for (id, info) in self.agent_infos.items()},
-            'start_fen': self.start_fen,
-            'isolation_level': self.isolation_level.value,
-            'max_moves': self.max_moves,
-            'agent_start_timeout': self.agent_start_timeout,
-            'agent_end_timeout': self.agent_end_timeout,
-            'agent_action_timeout': self.agent_action_timeout,
-            'seed': self.seed,
-            'event': self.event,
-            'site': self.site,
-            'date': self.date,
-            'game_round': self.game_round,
-            'white_player': self.white_player,
-            'black_player': self.black_player,
-            'extra_info': self.extra_info,
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict[str, typing.Any]) -> typing.Any:
-        return cls(
-            agent_infos = {
-                chessai.core.types.Color(int(id)): chessai.core.agentinfo.AgentInfo.from_dict(raw_info)
-                    for (id, raw_info) in data['agent_infos'].items()
-            },
-            start_fen = data.get('start_fen', None),
-            isolation_level = chessai.core.isolation.level.Level(data.get('isolation_level', chessai.core.isolation.level.Level.NONE.value)),
-            max_moves = data.get('max_moves', DEFAULT_MAX_MOVES),
-            agent_start_timeout = data.get('agent_start_timeout', DEFAULT_AGENT_START_TIMEOUT),
-            agent_end_timeout = data.get('agent_end_timeout', DEFAULT_AGENT_END_TIMEOUT),
-            agent_action_timeout = data.get('agent_action_timeout', DEFAULT_AGENT_ACTION_TIMEOUT),
-            seed = data.get('seed', None),
-            event = data.get('event', None),
-            site = data.get('site', None),
-            date = data.get('date', None),
-            game_round = data.get('game_round', None),
-            white_player = data.get('white_player', None),
-            black_player = data.get('black_player', None),
-            extra_info = data.get('extra_info', None))
-
-class GameResult(edq.util.json.DictConverter):
+class GameResult(edq.util.serial.DictConverter):
     """ The result of running a game. """
 
     def __init__(self,
-                 game_id: int,
-                 game_info: GameInfo,
-                 termination_reason: chessai.core.types.TerminationReason | None = None,
-                 score: float = 0,
-                 end_fen: str | None = None,
-                 game_timeout: bool = False,
-                 timeout_agent_teams: list[chessai.core.types.Color] | None = None,
-                 crash_agent_teams: list[chessai.core.types.Color] | None = None,
-                 winning_agent_teams: list[chessai.core.types.Color] | None = None,
-                 start_time: edq.util.time.Timestamp | None = None,
-                 end_time: edq.util.time.Timestamp | None = None,
-                 history: list[chessai.core.agentaction.AgentActionRecord] | None = None,
-                 agent_complete_records: dict[chessai.core.types.Color, chessai.core.agentaction.AgentActionRecord] | None = None,
-                 **kwargs: typing.Any) -> None:
+            game_id: int,
+            game_info: GameInfo,
+            termination_reason: chessai.core.types.TerminationReason | None = None,
+            score: float = 0,
+            end_fen: str | None = None,
+            game_timeout: bool = False,
+            timeout_agent_teams: list[chessai.core.types.Color] | None = None,
+            crash_agent_teams: list[chessai.core.types.Color] | None = None,
+            winning_agent_teams: list[chessai.core.types.Color] | None = None,
+            start_time: edq.util.time.Timestamp | None = None,
+            end_time: edq.util.time.Timestamp | None = None,
+            history: list[chessai.core.agentaction.AgentActionRecord] | None = None,
+            agent_complete_records: dict[chessai.core.types.Color, chessai.core.agentaction.AgentActionRecord] | None = None,
+            **kwargs: typing.Any,
+            ) -> None:
         self.game_id: int = game_id
         """ The ID of the game result. """
 
@@ -256,45 +217,6 @@ class GameResult(edq.util.json.DictConverter):
 
         Games may interpret this value in different ways.
         """
-
-    def to_dict(self) -> dict[str, typing.Any]:
-        return {
-            'game_id': self.game_id,
-            'game_info': self.game_info.to_dict(),
-            'termination_reason': self.termination_reason,
-            'score': self.score,
-            'end_fen': self.end_fen,
-            'game_timeout': self.game_timeout,
-            'timeout_agent_teams': self.timeout_agent_teams,
-            'crash_agent_teams': self.crash_agent_teams,
-            'winning_agent_teams': self.winning_agent_teams,
-            'start_time': self.start_time,
-            'end_time': self.end_time,
-            'history': [item.to_dict() for item in self.history],
-            'agent_complete_records': {player: record.to_dict() for (player, record) in self.agent_complete_records.items()},
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict[str, typing.Any]) -> typing.Any:
-        agent_complete_records = {}
-        for (player, raw_record) in data.get('agent_complete_records', {}).items():
-            agent_complete_records[player] = chessai.core.agentaction.AgentActionRecord.from_dict(raw_record)
-
-        return cls(
-            data['game_id'],
-            GameInfo.from_dict(data['game_info']),
-            termination_reason = data.get('termination_reason', None),
-            score = data.get('score', 0),
-            end_fen = data.get('end_fen', None),
-            start_time = data.get('start_time', None),
-            end_time = data.get('end_time', None),
-            history = [chessai.core.agentaction.AgentActionRecord.from_dict(item) for item in data.get('history', [])],
-            agent_complete_records = agent_complete_records,
-            game_timeout = data.get('game_timeout', False),
-            timeout_agent_teams = data.get('timeout_agent_teams', None),
-            crash_agent_teams = data.get('crash_agent_teams', None),
-            winning_agent_teams = data.get('winning_agent_teams', None),
-        )
 
     def get_duration_secs(self) -> float:
         """

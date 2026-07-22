@@ -4,12 +4,12 @@ This module handles containers for passing information from agents back to the g
 
 import typing
 
-import edq.util.json
+import edq.util.serial
 import edq.util.time
 
 import chessai.core.action
 
-class AgentAction(edq.util.json.DictConverter):
+class AgentAction(edq.util.serial.DictConverter):
     """
     The full response by an agent when an action is requested.
     Agent's usually just provide actions, but more information can be supplied if necessary.
@@ -36,20 +36,7 @@ class AgentAction(edq.util.json.DictConverter):
         All information put here must be trivially JSON serializable.
         """
 
-    def to_dict(self) -> dict[str, typing.Any]:
-        return {
-            'action': self.action.to_dict() if (self.action is not None) else None,
-            'other_info': self.other_info,
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict[str, typing.Any]) -> typing.Any:
-        return cls(
-            action = chessai.core.action.Action.from_dict(data['action']) if data['action'] is not None else None,
-            other_info = data.get('other_info', None),
-        )
-
-class AgentActionRecord(edq.util.json.DictConverter):
+class AgentActionRecord(edq.util.serial.DictConverter):
     """
     The full representation of requesting an action from an agent.
     In addition to the data supplied by the agent,
@@ -85,22 +72,3 @@ class AgentActionRecord(edq.util.json.DictConverter):
             return chessai.core.action.NoneAction()
 
         return self.agent_action.action
-
-    def to_dict(self) -> dict[str, typing.Any]:
-        return {
-            'player': self.player,
-            'agent_action': self.agent_action.to_dict() if (self.agent_action is not None) else None,
-            'duration': self.duration,
-            'crashed': self.crashed,
-            'timeout': self.timeout,
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict[str, typing.Any]) -> typing.Any:
-        return cls(
-            player = data['player'],
-            agent_action = AgentAction.from_dict(data['agent_action']) if data['agent_action'] is not None else None,
-            duration = edq.util.time.Duration(data['duration']),
-            crashed = data.get('crashed', False),
-            timeout = data.get('timeout', False),
-        )

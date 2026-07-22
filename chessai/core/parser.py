@@ -2,7 +2,7 @@ import os
 import re
 import typing
 
-import edq.util.json
+import edq.util.serial
 
 import chessai.core.action
 import chessai.core.board

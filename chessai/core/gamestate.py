@@ -2,7 +2,7 @@ import logging
 import random
 import typing
 
-import edq.util.json
+import edq.util.serial
 
 import chessai.core.action
 import chessai.core.agentaction
@@ -17,7 +17,7 @@ DEFAULT_FEN: str = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 
 _KNOWN_LEGAL_ACTIONS: dict[str, list[chessai.core.action.Action]] = {}
 
-class GameState(edq.util.json.DictConverter):
+class GameState(edq.util.serial.DictConverter):
     """
     The base for all game states in chessai.
     A game state should contain all the information about the current state of the game.
@@ -640,7 +640,9 @@ class GameState(edq.util.json.DictConverter):
 
         return False, None
 
-    def copy(self) -> 'GameState':
+    def copy(self,
+            context: typing.Union[edq.util.serial.SerializationContext, None] = None,
+            ) -> 'GameState':
         """
         Get a deep copy of this state.
 
@@ -648,14 +650,14 @@ class GameState(edq.util.json.DictConverter):
         """
 
         new_state = GameState(board           = self.board.copy(),
-                              turn            = self.turn,
-                              castling_rights = self.castling_rights,
-                              en_passant_coordinate = self.en_passant_coordinate,
-                              halfmove_clock  = self.halfmove_clock,
-                              fullmove_number = self.fullmove_number,
-                              previous_action = self.previous_action,
-                              seed            = self.seed,
-                              game_over       = self.game_over)
+            turn            = self.turn,
+            castling_rights = self.castling_rights,
+            en_passant_coordinate = self.en_passant_coordinate,
+            halfmove_clock  = self.halfmove_clock,
+            fullmove_number = self.fullmove_number,
+            previous_action = self.previous_action,
+            seed            = self.seed,
+            game_over       = self.game_over)
 
         return new_state
 
@@ -760,47 +762,6 @@ class GameState(edq.util.json.DictConverter):
         """ Get the parser that can convert user inputs into a gamestate. """
 
         return chessai.core.parser.parse_fen
-
-    def to_dict(self) -> dict[str, typing.Any]:
-        return {
-            # It will auto understand how to call the board's to dict
-            'board':            self.board.to_dict(),
-            'turn':             self.turn,
-            'castling_rights':  self.castling_rights,
-            # Can do or None, as long as it knows coordinates
-            'en_passant_coordinate': self.en_passant_coordinate.to_dict() if (self.en_passant_coordinate is not None) else None,
-            'halfmove_clock':   self.halfmove_clock,
-            'fullmove_number':  self.fullmove_number,
-            'previous_action':  self.previous_action.to_dict() if (self.previous_action is not None) else None,
-            'seed':             self.seed,
-            'game_over':        self.game_over,
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict[str, typing.Any]) -> typing.Any:
-        raw_en_passant_coordinate = data.get('en_passant_coordinate', None)
-        if (raw_en_passant_coordinate is not None):
-            en_passant_coordinate = raw_en_passant_coordinate.from_dict()
-        else:
-            en_passant_coordinate = None
-
-        raw_previous_action = data.get('previous_action', None)
-        if (raw_previous_action is not None):
-            previous_action = raw_previous_action.from_dict()
-        else:
-            previous_action = None
-
-        return cls(
-            board            = data['board'].from_dict(),
-            turn             = data['turn'],
-            castling_rights  = data['castling_rights'],
-            en_passant_coordinate = en_passant_coordinate,
-            halfmove_clock   = data.get('halfmove_clock', 0),
-            fullmove_number  = data.get('fullmove_number', 1),
-            previous_action  = previous_action,
-            seed             = data.get('seed', -1),
-            game_over        = data.get('game_over', False),
-        )
 
     @classmethod
     def from_fen(cls,

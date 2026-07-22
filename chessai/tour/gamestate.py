@@ -1,6 +1,8 @@
 import random
 import typing
 
+import edq.util.serial
+
 import chessai.chess.gamestate
 import chessai.core.action
 import chessai.core.board
@@ -189,20 +191,14 @@ class GameState(chessai.chess.gamestate.GameState):
 
         return ([self.search_agent.opposite()], self.score)
 
-    def copy(self) -> 'GameState':
-        new_state = GameState(board           = self.board.copy(),
-                              turn            = self.turn,
-                              castling_rights = self.castling_rights,
-                              en_passant_coordinate = self.en_passant_coordinate,
-                              halfmove_clock  = self.halfmove_clock,
-                              fullmove_number = self.fullmove_number,
-                              previous_action = self.previous_action,
-                              seed            = self.seed,
-                              game_over       = self.game_over,
-                              search_targets  = self.search_targets.copy(),
-                              search_agent    = self.search_agent,
-                              _validate_search_targets = False)
+    def copy(self,
+            context: typing.Union[edq.util.serial.SerializationContext, None] = None,
+            ) -> 'GameState':
+        new_state = super().copy()
+        new_state = typing.cast(GameState, new_state)
 
+        new_state.search_targets = self.search_targets.copy()
+        new_state.search_agent = self.search_agent
         new_state.score = self.score
 
         return new_state

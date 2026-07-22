@@ -133,14 +133,6 @@ class Coordinate:
     def __repr__(self) -> str:
         return str(self)
 
-    def to_dict(self) -> dict[str, typing.Any]:
-        """ Convert the coordinate into a dictionary. """
-
-        return {
-            'file': self.file,
-            'rank': self.rank,
-        }
-
     @classmethod
     def from_dict(cls, data: dict[str, typing.Any]) -> 'Coordinate':
         """ Create a coordinate from a dictionary of data. """

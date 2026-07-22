@@ -2,7 +2,7 @@ import os
 import re
 import typing
 
-import edq.util.json
+import edq.util.serial
 
 import chessai.core.action
 import chessai.core.castling
@@ -25,7 +25,7 @@ DEFAULT_BOARD_RANKS: int = 8
 
 DEFAULT_BOARD_SIZE: int = DEFAULT_BOARD_RANKS * DEFAULT_BOARD_FILES
 
-class Board(edq.util.json.DictConverter):
+class Board(edq.util.serial.DictConverter):
     """ The board holds the current coordinates of pieces on the board. """
 
     def __init__(self,
@@ -231,7 +231,9 @@ class Board(edq.util.json.DictConverter):
 
         return ''.join(ranks)
 
-    def copy(self) -> 'Board':
+    def copy(self,
+            context: typing.Union[edq.util.serial.SerializationContext, None] = None,
+            ) -> 'Board':
         """ Create a deep copy of the board. """
 
         new_board = Board(None, self.pieces, self.num_files, self.num_ranks)
@@ -246,14 +248,3 @@ class Board(edq.util.json.DictConverter):
 
         self.pieces = {file: rank.copy() for (file, rank) in self.pieces.items()}
         self._needs_copy = False
-
-    def to_dict(self) -> dict[str, typing.Any]:
-        return {
-            'pieces': self.pieces,
-            'num_files': self.num_files,
-            'num_ranks': self.num_ranks,
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict[str, typing.Any]) -> typing.Any:
-        return cls(**data)

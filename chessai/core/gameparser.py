@@ -6,7 +6,7 @@ import random
 import re
 import typing
 
-import edq.util.json
+import edq.util.serial
 
 import chessai.core.action
 import chessai.core.board
@@ -58,36 +58,10 @@ SET_UP_HEADER_KEY: str = 'SetUp'
 
 MAX_PGN_LINE_LENGTH: int = 80
 
-class StandardPGNHeaders(enum.StrEnum):
+PGN_HEADERS: list[str] = ["event", "site", "date", "round", "white", "black", "result"]
+
+class StandardHeaders:
     """
-    The standard seven PGN headers.
-    """
-
-    EVENT = 'Event'
-    """ The name of the tournament or match event. """
-
-    SITE = 'Site'
-    """ The location of the event. """
-
-    DATE = 'Date'
-    """ The starting date of the game. """
-
-    ROUND = 'Round'
-    """ The playing round ordinal of the game. """
-
-    WHITE = 'White'
-    """ The player of the white pieces. """
-
-    BLACK = 'Black'
-    """ The player of the black pieces. """
-
-    RESULT = 'Result'
-    """ The result of the game. """
-
-class StandardHeadersDict(dict):
-    """
-    A dictionary that only allows StandardPGNHeaders as keys.
-
     These seven standard tags will always be present in the headers:
      - Event: the name of the tournament or match event
      - Site: the location of the event
@@ -101,16 +75,83 @@ class StandardHeadersDict(dict):
     see https://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm#c8.1 .
     """
 
-    def __setitem__(self, key: StandardPGNHeaders, value: str) -> None:
-        if (not isinstance(key, StandardPGNHeaders)):
-            raise TypeError(f"Key must be an instance of StandardPGNHeaders, not {type(key).__name__}.")
+    def __init__(self,
+            event: str = "?",
+            site: str = "?",
+            date: str = "????.??.??",
+            game_round: str = "?",
+            white: str = "?",
+            black: str = "?",
+            result: str = "*",
+            ) -> None:
+        self.event: str = event
+        """ The name of the tournament or match event. """
 
-        super().__setitem__(key, value)
+        self.site: str = site
+        """ The location of the event. """
 
-    def is_complete(self) -> bool:
-        """ Returns if all standard headers are present in the dictionary. """
+        self.date: str = date
+        """ The starting date of the game. """
 
-        return (set(self.keys()) == set(StandardPGNHeaders))
+        self.round: str = game_round
+        """ The playing round ordinal of the game. """
+
+        self.white: str = white
+        """ The player of the white pieces. """
+
+        self.black: str = black
+        """ The player of the black pieces. """
+
+        self.result: str = result
+        """ The result of the game. """
+
+    def _set(self, attribute: str, value: str) -> None:
+        """ Update the header attribute to the given value. """
+
+        match attribute.lower():
+            case "event":
+                self.event = value
+            case "site":
+                self.site = value
+            case "date":
+                self.date = value
+            case "round":
+                self.round = value
+            case "white":
+                self.white = value
+            case "black":
+                self.black = value
+            case "result":
+                self.result = value
+            case _:
+                return
+
+    def to_pgn(self) -> list[str]:
+        """ Convert the headers to a list of PGN tags. """
+
+        tags: list[str] = []
+
+        tags.append(_to_tag("Event", self.event))
+        tags.append(_to_tag("Site", self.site))
+        tags.append(_to_tag("Date", self.date))
+        tags.append(_to_tag("Round", self.round))
+        tags.append(_to_tag("White", self.white))
+        tags.append(_to_tag("Black", self.black))
+        tags.append(_to_tag("Result", self.result))
+
+        return tags
+
+    def __eq__(self, other: object) -> bool:
+        if (not isinstance(other, StandardHeaders)):
+            return False
+
+        return (self.event == other.event
+            and self.site == other.site
+            and self.date == other.date
+            and self.round == other.round
+            and self.white == other.white
+            and self.black == other.black
+            and self.result == other.result)
 
 class PGNResult(enum.StrEnum):
     """ The possible game endings denoted in a PGN. """
@@ -130,13 +171,13 @@ class PGNResult(enum.StrEnum):
     UNKNOWN = 'Unknown'
     """ The ending of the game is unknown. """
 
-class ParsedPGN(edq.util.json.DictConverter):
+class ParsedPGN(edq.util.serial.DictConverter):
     """
     The parsed result of a single PGN game.
     """
 
     def __init__(self,
-                 headers: StandardHeadersDict | None = None,
+                 headers: StandardHeaders | None = None,
                  optional_headers: dict[str, typing.Any] | None = None,
                  starting_fen: str | None = None,
                  initial_actions: list[chessai.core.action.Action] | None = None,
@@ -144,9 +185,9 @@ class ParsedPGN(edq.util.json.DictConverter):
                  result: PGNResult = PGNResult.UNKNOWN) -> None:
 
         if (headers is None):
-            headers = StandardHeadersDict()
+            headers = StandardHeaders()
 
-        self.headers: StandardHeadersDict = headers
+        self.headers: StandardHeaders = headers
         """ The standard headers from a single PGN game. """
 
         if (optional_headers is None):
@@ -195,10 +236,9 @@ def parse_pgn(pgn: str, state_class: typing.Type[chessai.core.gamestate.GameStat
 
     index = 0
 
-    headers: StandardHeadersDict = StandardHeadersDict()
-    optional_headers: dict[str, typing.Any] = {}
+    headers: StandardHeaders = StandardHeaders()
 
-    required_headers = {header.value for header in StandardPGNHeaders}
+    optional_headers: dict[str, typing.Any] = {}
 
     # Parse the header fields.
     for i, line in enumerate(lines):
@@ -229,19 +269,14 @@ def parse_pgn(pgn: str, state_class: typing.Type[chessai.core.gamestate.GameStat
         tag_header_value = tag_match.group(2)
 
         # Determine if this is a standard header key or not.
-        if (tag_header_key in required_headers):
-            headers[StandardPGNHeaders(tag_header_key)] = tag_header_value
+        if (tag_header_key.lower() in PGN_HEADERS):
+            headers._set(tag_header_key, tag_header_value)
         else:
             optional_headers[tag_header_key] = tag_header_value
 
     # No game found.
-    if (len(headers) == 0):
+    if (headers == StandardHeaders()):
         return None
-
-    # Ensure all required headers are present.
-    if (not headers.is_complete()):
-        actual_headers = {header.value for header in headers.keys()}
-        raise ValueError(f"Did not find all required headers. Expected: '{required_headers}', Found: '{actual_headers}'.")
 
     # Start scanning for moves from the end of the headers.
     lines = lines[index:]
@@ -432,7 +467,7 @@ def load_pgn_from_gzip(path: str) -> str:
 
     return decompressed_contents
 
-def to_pgn(headers: StandardHeadersDict, optional_headers: dict[str, typing.Any],
+def to_pgn(headers: StandardHeaders, optional_headers: dict[str, typing.Any],
            state_class: typing.Type[chessai.core.gamestate.GameState], start_fen: str,
            actions: list[chessai.core.action.Action]) -> str:
     """
@@ -442,17 +477,7 @@ def to_pgn(headers: StandardHeadersDict, optional_headers: dict[str, typing.Any]
     If a move cannot be generated from an action and gamestate pair, an error is raised.
     """
 
-    if (not headers.is_complete()):
-        actual = {header.value for header in headers.keys()}
-        required = {header.value for header in StandardPGNHeaders}
-        raise ValueError("Cannot write PGN without all required headers."
-                         + f" Expected: '{required}', found: '{actual}'.")
-
-    lines: list[str] = []
-
-    # Build the header information, starting with the required headers.
-    for header in StandardPGNHeaders:
-        lines.append(_to_tag(header, headers[header]))
+    lines: list[str] = headers.to_pgn()
 
     # Non-default starting FENs require additional PGN information.
     if (start_fen != chessai.core.gamestate.DEFAULT_FEN):
@@ -492,7 +517,7 @@ def to_pgn(headers: StandardHeadersDict, optional_headers: dict[str, typing.Any]
         state.push(action)
 
     # Add the result token.
-    pgn_tokens.append(headers[StandardPGNHeaders.RESULT])
+    pgn_tokens.append(headers.result)
 
     movetext_lines: list[str] = []
     current_line = ''

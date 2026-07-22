@@ -7,6 +7,7 @@ import re
 import typing
 
 import edq.util.json
+import edq.util.serial
 
 import chessai.core.coordinate
 import chessai.core.piece
@@ -21,7 +22,7 @@ UCI_NULL_ACTION: str = '0000'
 UCI_PROPOSE_DRAW_ACTION: str = 'Propose Draw'
 UCI_REJECT_DRAW_ACTION: str = 'Reject Draw'
 
-class Action(edq.util.json.DictConverter):
+class Action(edq.util.serial.DictConverter):
     """
     The base for all actions that an agent is allowed to take.
 

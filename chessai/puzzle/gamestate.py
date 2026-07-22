@@ -1,4 +1,7 @@
+import copy
 import typing
+
+import edq.util.serial
 
 import chessai.chess.piece
 import chessai.chess.gamestate
@@ -58,19 +61,14 @@ class GameState(chessai.chess.gamestate.GameState):
 
         return ([self.dummy_player], 0.0)
 
-    def copy(self) -> 'GameState':
-        new_state = GameState(board           = self.board.copy(),
-                              turn            = self.turn,
-                              castling_rights = self.castling_rights,
-                              en_passant_coordinate = self.en_passant_coordinate,
-                              halfmove_clock  = self.halfmove_clock,
-                              fullmove_number = self.fullmove_number,
-                              previous_action = self.previous_action,
-                              seed            = self.seed,
-                              game_over       = self.game_over,
-                              puzzle_solved   = self.puzzle_solved)
+    def copy(self,
+            context: typing.Union[edq.util.serial.SerializationContext, None] = None,
+            ) -> 'GameState':
+        new_state = super().copy()
+        new_state = typing.cast(GameState, new_state)
 
-        new_state._move_lines = self._move_lines
+        new_state.puzzle_solved = self.puzzle_solved
+        new_state._move_lines = copy.deepcopy(self._move_lines)
 
         return new_state
 

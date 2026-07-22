@@ -2,7 +2,7 @@ import dataclasses
 import enum
 import typing
 
-import edq.util.json
+import edq.util.serial
 
 import chessai.core.coordinate
 import chessai.core.types
@@ -41,7 +41,7 @@ class MoveVector:
     kind: MoveKind = MoveKind.NORMAL
     """ Determines if the movement is used for movement, capture, or both. """
 
-class Piece(edq.util.json.DictConverter):
+class Piece(edq.util.serial.DictConverter):
     """ A piece with a team color and movement rules. """
 
     def __init_subclass__(cls, symbols: tuple[str, ...] = (), **kwargs: typing.Any):

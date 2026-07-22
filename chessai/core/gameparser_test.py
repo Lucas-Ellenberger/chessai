@@ -29,15 +29,15 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
                 """,
                 None,
                 chessai.core.gameparser.ParsedPGN(
-                    headers = chessai.core.gameparser.StandardHeadersDict({
-                        chessai.core.gameparser.StandardPGNHeaders.EVENT: "Test",
-                        chessai.core.gameparser.StandardPGNHeaders.SITE: "Here",
-                        chessai.core.gameparser.StandardPGNHeaders.DATE: "2024.01.01",
-                        chessai.core.gameparser.StandardPGNHeaders.ROUND: "1",
-                        chessai.core.gameparser.StandardPGNHeaders.WHITE: "A",
-                        chessai.core.gameparser.StandardPGNHeaders.BLACK: "B",
-                        chessai.core.gameparser.StandardPGNHeaders.RESULT: "1/2-1/2",
-                    }),
+                    headers = chessai.core.gameparser.StandardHeaders(
+                        event = "Test",
+                        site = "Here",
+                        date = "2024.01.01",
+                        game_round = "1",
+                        white = "A",
+                        black = "B",
+                        result = "1/2-1/2",
+                    ),
                     initial_actions = [
                         chessai.core.action.from_uci("e2e4"),
                         chessai.core.action.from_uci("e7e5"),
@@ -65,15 +65,15 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
                 """,
                 None,
                 chessai.core.gameparser.ParsedPGN(
-                    headers = chessai.core.gameparser.StandardHeadersDict({
-                        chessai.core.gameparser.StandardPGNHeaders.EVENT: "Test",
-                        chessai.core.gameparser.StandardPGNHeaders.SITE: "Here",
-                        chessai.core.gameparser.StandardPGNHeaders.DATE: "2024.01.01",
-                        chessai.core.gameparser.StandardPGNHeaders.ROUND: "1",
-                        chessai.core.gameparser.StandardPGNHeaders.WHITE: "A",
-                        chessai.core.gameparser.StandardPGNHeaders.BLACK: "B",
-                        chessai.core.gameparser.StandardPGNHeaders.RESULT: "*",
-                    }),
+                    headers = chessai.core.gameparser.StandardHeaders(
+                        event = "Test",
+                        site = "Here",
+                        date = "2024.01.01",
+                        game_round = "1",
+                        white = "A",
+                        black = "B",
+                        result = "*",
+                    ),
                     initial_actions = [
                         chessai.core.action.from_uci("e2e4"),
                         chessai.core.action.from_uci("e7e5"),
@@ -99,15 +99,15 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
                 """,
                 None,
                 chessai.core.gameparser.ParsedPGN(
-                    headers = chessai.core.gameparser.StandardHeadersDict({
-                        chessai.core.gameparser.StandardPGNHeaders.EVENT: "Test",
-                        chessai.core.gameparser.StandardPGNHeaders.SITE: "Here",
-                        chessai.core.gameparser.StandardPGNHeaders.DATE: "2024.01.01",
-                        chessai.core.gameparser.StandardPGNHeaders.ROUND: "1",
-                        chessai.core.gameparser.StandardPGNHeaders.WHITE: "A",
-                        chessai.core.gameparser.StandardPGNHeaders.BLACK: "B",
-                        chessai.core.gameparser.StandardPGNHeaders.RESULT: "*",
-                    }),
+                    headers = chessai.core.gameparser.StandardHeaders(
+                        event = "Test",
+                        site = "Here",
+                        date = "2024.01.01",
+                        game_round = "1",
+                        white = "A",
+                        black = "B",
+                        result = "*",
+                    ),
                     initial_actions = [
                         chessai.core.action.from_uci("e2e4"),
                         chessai.core.action.from_uci("e7e5"),
@@ -133,15 +133,15 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
                 """,
                 None,
                 chessai.core.gameparser.ParsedPGN(
-                    headers = chessai.core.gameparser.StandardHeadersDict({
-                        chessai.core.gameparser.StandardPGNHeaders.EVENT: "Test",
-                        chessai.core.gameparser.StandardPGNHeaders.SITE: "Here",
-                        chessai.core.gameparser.StandardPGNHeaders.DATE: "2024.01.01",
-                        chessai.core.gameparser.StandardPGNHeaders.ROUND: "1",
-                        chessai.core.gameparser.StandardPGNHeaders.WHITE: "A",
-                        chessai.core.gameparser.StandardPGNHeaders.BLACK: "B",
-                        chessai.core.gameparser.StandardPGNHeaders.RESULT: "*",
-                    }),
+                    headers = chessai.core.gameparser.StandardHeaders(
+                        event = "Test",
+                        site = "Here",
+                        date = "2024.01.01",
+                        game_round = "1",
+                        white = "A",
+                        black = "B",
+                        result = "*",
+                    ),
                     initial_actions = [
                         chessai.core.action.from_uci("e2e4"),
                         chessai.core.action.from_uci("e7e5"),
@@ -170,15 +170,15 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
                 """,
                 None,
                 chessai.core.gameparser.ParsedPGN(
-                    headers = chessai.core.gameparser.StandardHeadersDict({
-                        chessai.core.gameparser.StandardPGNHeaders.EVENT: "Test",
-                        chessai.core.gameparser.StandardPGNHeaders.SITE: "Here",
-                        chessai.core.gameparser.StandardPGNHeaders.DATE: "2024.01.01",
-                        chessai.core.gameparser.StandardPGNHeaders.ROUND: "1",
-                        chessai.core.gameparser.StandardPGNHeaders.WHITE: "A",
-                        chessai.core.gameparser.StandardPGNHeaders.BLACK: "B",
-                        chessai.core.gameparser.StandardPGNHeaders.RESULT: "*",
-                    }),
+                    headers = chessai.core.gameparser.StandardHeaders(
+                        event = "Test",
+                        site = "Here",
+                        date = "2024.01.01",
+                        game_round = "1",
+                        white = "A",
+                        black = "B",
+                        result = "*",
+                    ),
                     initial_actions = [
                         chessai.core.action.from_uci("e2e4"),
                         chessai.core.action.from_uci("e7e5"),
@@ -208,15 +208,15 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
                 """,
                 None,
                 chessai.core.gameparser.ParsedPGN(
-                    headers = chessai.core.gameparser.StandardHeadersDict({
-                        chessai.core.gameparser.StandardPGNHeaders.EVENT: "Test",
-                        chessai.core.gameparser.StandardPGNHeaders.SITE: "Here",
-                        chessai.core.gameparser.StandardPGNHeaders.DATE: "2024.01.01",
-                        chessai.core.gameparser.StandardPGNHeaders.ROUND: "1",
-                        chessai.core.gameparser.StandardPGNHeaders.WHITE: "A",
-                        chessai.core.gameparser.StandardPGNHeaders.BLACK: "B",
-                        chessai.core.gameparser.StandardPGNHeaders.RESULT: "*",
-                    }),
+                    headers = chessai.core.gameparser.StandardHeaders(
+                        event = "Test",
+                        site = "Here",
+                        date = "2024.01.01",
+                        game_round = "1",
+                        white = "A",
+                        black = "B",
+                        result = "*",
+                    ),
                     optional_headers = {"FEN": "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"},
                     initial_actions = [
                         chessai.core.action.from_uci("b8c6"),
@@ -253,15 +253,15 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
                 """,
                 None,
                 chessai.core.gameparser.ParsedPGN(
-                    headers = chessai.core.gameparser.StandardHeadersDict({
-                        chessai.core.gameparser.StandardPGNHeaders.EVENT: "casual correspondence game",
-                        chessai.core.gameparser.StandardPGNHeaders.SITE: "https://lichess.org/s7o9V5ny",
-                        chessai.core.gameparser.StandardPGNHeaders.DATE: "2026.05.07",
-                        chessai.core.gameparser.StandardPGNHeaders.ROUND: "-",
-                        chessai.core.gameparser.StandardPGNHeaders.WHITE: "ScrimScram",
-                        chessai.core.gameparser.StandardPGNHeaders.BLACK: "Anonymous",
-                        chessai.core.gameparser.StandardPGNHeaders.RESULT: "1/2-1/2",
-                    }),
+                    headers = chessai.core.gameparser.StandardHeaders(
+                        event = "casual correspondence game",
+                        site = "https://lichess.org/s7o9V5ny",
+                        date = "2026.05.07",
+                        game_round = "-",
+                        white = "ScrimScram",
+                        black = "Anonymous",
+                        result = "1/2-1/2",
+                    ),
                     optional_headers = {
                         "GameId": "s7o9V5ny",
                         "UTCDate": "2026.05.07",
@@ -315,6 +315,8 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
                     self.fail(f"Did not get expected error: '{error_substring}'.")
 
                 self.assertIsNotNone(actual_pgn)
-                self.assertTrue(actual_pgn.headers.is_complete())
 
+                self.assertEqual(expected_pgn.headers, actual_pgn.headers)
+                expected_pgn.headers = None
+                actual_pgn.headers = None
                 self.assertEqual(expected_pgn, actual_pgn)

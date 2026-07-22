@@ -1,5 +1,7 @@
 import typing
 
+import edq.util.serial
+
 import chessai.chess.piece
 import chessai.core.action
 import chessai.core.gamestate
@@ -584,16 +586,11 @@ class GameState(chessai.core.gamestate.GameState):
         passed_rank = (action.start_coordinate.rank + action.end_coordinate.rank) // 2
         return chessai.core.coordinate.Coordinate(action.start_coordinate.file, passed_rank)
 
-    def copy(self) -> 'GameState':
-        new_state = GameState(board           = self.board.copy(),
-                              turn            = self.turn,
-                              castling_rights = self.castling_rights,
-                              en_passant_coordinate = self.en_passant_coordinate,
-                              halfmove_clock  = self.halfmove_clock,
-                              fullmove_number = self.fullmove_number,
-                              previous_action = self.previous_action,
-                              seed            = self.seed,
-                              game_over       = self.game_over)
+    def copy(self,
+            context: typing.Union[edq.util.serial.SerializationContext, None] = None,
+            ) -> 'GameState':
+        new_state = super().copy()
+        new_state = typing.cast(GameState, new_state)
 
         return new_state
 
