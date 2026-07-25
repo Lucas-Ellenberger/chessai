@@ -1,19 +1,21 @@
 import re
 import typing
 
+import edq.util.serial
+
 COORDINATES_KEY: str = 'coordinates'
 
 COORDINATE_PATTERN: re.Pattern = re.compile(r'([a-z]+)(\d+)')
 
-class Coordinate:
+# TODO: Test performance again and see if adding back slots helps,
+# if so we need to override to_pod()
+class Coordinate(edq.util.serial.DictConverter):
     """
     An immutable chess coordinate on a board.
 
     File increases left-to-right (a=0, h=7).
     Rank increases bottom-to-top (1=0, 8=7).
     """
-
-    __slots__ = ('file', 'rank')
 
     def __init__(self, file: int, rank: int) -> None:
         self.file: int = file
