@@ -58,9 +58,17 @@ SET_UP_HEADER_KEY: str = 'SetUp'
 
 MAX_PGN_LINE_LENGTH: int = 80
 
-PGN_HEADERS: list[str] = ["event", "site", "date", "round", "white", "black", "result"]
+PGN_HEADERS: list[str] = [
+    "event",
+    "site",
+    "date",
+    "round",
+    "white",
+    "black",
+    "result",
+]
 
-class StandardHeaders:
+class StandardHeaders(edq.util.serial.DictConverter):
     """
     These seven standard tags will always be present in the headers:
      - Event: the name of the tournament or match event

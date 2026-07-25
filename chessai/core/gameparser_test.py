@@ -13,7 +13,7 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
         """ Test the parsing of a single raw PGN into a ParsedPGN. """
 
         # [(raw PGN, error substring, expected ParsedPGN), ...]
-        test_cases: list[tuple[str, str | None, chessai.core.gameparser.ParsedPGN]] = [
+        test_cases: list[tuple[str, chessai.core.gameparser.ParsedPGN]] = [
             # Default headers and move SANs.
             (
                 """
@@ -27,7 +27,6 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
 
                 1. e4 e5 2. Nf3 Nc6 1/2-1/2
                 """,
-                None,
                 chessai.core.gameparser.ParsedPGN(
                     headers = chessai.core.gameparser.StandardHeaders(
                         event = "Test",
@@ -63,7 +62,6 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
 
                 1. e4 (1. d4 d5) e5 2. Nf3 Nc6 *
                 """,
-                None,
                 chessai.core.gameparser.ParsedPGN(
                     headers = chessai.core.gameparser.StandardHeaders(
                         event = "Test",
@@ -97,7 +95,6 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
 
                 1. e4 (1. d4 (1... d5) d5) e5 2. Nf3 Nc6 *
                 """,
-                None,
                 chessai.core.gameparser.ParsedPGN(
                     headers = chessai.core.gameparser.StandardHeaders(
                         event = "Test",
@@ -131,7 +128,6 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
 
                 1. e4 {Very interesting move!} e5 2. Nf3 Nc6 *
                 """,
-                None,
                 chessai.core.gameparser.ParsedPGN(
                     headers = chessai.core.gameparser.StandardHeaders(
                         event = "Test",
@@ -168,7 +164,6 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
                 multi-line
                 comment!} e5 2. Nf3 Nc6 *
                 """,
-                None,
                 chessai.core.gameparser.ParsedPGN(
                     headers = chessai.core.gameparser.StandardHeaders(
                         event = "Test",
@@ -206,7 +201,6 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
 
                 1... Nc6 2. Nf3 Nf6 *
                 """,
-                None,
                 chessai.core.gameparser.ParsedPGN(
                     headers = chessai.core.gameparser.StandardHeaders(
                         event = "Test",
@@ -251,7 +245,6 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
 
                 1. e4 e6 { C00 French Defense } { The game is a draw. } 1/2-1/2
                 """,
-                None,
                 chessai.core.gameparser.ParsedPGN(
                     headers = chessai.core.gameparser.StandardHeaders(
                         event = "casual correspondence game",
@@ -286,37 +279,36 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
                 )
             ),
 
-            # Error: missing required headers.
+            # Missing some headers.
             (
                 """
                 [Event "Test"]
 
                 1. e4 e5
                 """,
-                "Did not find all required headers",
-                None,
+                chessai.core.gameparser.ParsedPGN(
+                    headers = chessai.core.gameparser.StandardHeaders(
+                        event = "Test",
+                        result = "*",
+                    ),
+                    optional_headers = {},
+                    initial_actions = [
+                        chessai.core.action.from_uci("e2e4"),
+                        chessai.core.action.from_uci("e7e5"),
+                    ],
+                    result = "Unknown",
+                )
             ),
         ]
 
         for i, test_case in enumerate(test_cases):
-            (raw_pgn, error_substring, expected_pgn) = test_case
+            (raw_pgn, expected_pgn) = test_case
 
             with self.subTest(msg = f"Case {i}:"):
                 try:
                     actual_pgn = chessai.core.gameparser.parse_pgn(raw_pgn, chessai.chess.gamestate.GameState)
                 except Exception as ex:
-                    if (error_substring is None):
-                        self.fail(f"Unexpected error: '{str(ex)}'.")
-
-                    self.assertIn(error_substring, str(ex))
+                    self.fail(f"Unexpected error: '{str(ex)}'.")
                     continue
 
-                if (error_substring is not None):
-                    self.fail(f"Did not get expected error: '{error_substring}'.")
-
-                self.assertIsNotNone(actual_pgn)
-
-                self.assertEqual(expected_pgn.headers, actual_pgn.headers)
-                expected_pgn.headers = None
-                actual_pgn.headers = None
                 self.assertEqual(expected_pgn, actual_pgn)

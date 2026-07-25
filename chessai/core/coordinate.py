@@ -7,8 +7,6 @@ COORDINATES_KEY: str = 'coordinates'
 
 COORDINATE_PATTERN: re.Pattern = re.compile(r'([a-z]+)(\d+)')
 
-# TODO: Test performance again and see if adding back slots helps,
-# if so we need to override to_pod()
 class Coordinate(edq.util.serial.DictConverter):
     """
     An immutable chess coordinate on a board.
@@ -136,7 +134,7 @@ class Coordinate(edq.util.serial.DictConverter):
         return str(self)
 
     @classmethod
-    def from_dict(cls, data: dict[str, typing.Any]) -> 'Coordinate':
+    def from_flat_dict(cls, data: dict[str, typing.Any]) -> 'Coordinate':
         """ Create a coordinate from a dictionary of data. """
 
         return Coordinate(file = data['file'], rank = data['rank'])
@@ -157,7 +155,7 @@ def coordinates_from_dict(data: dict[str, typing.Any]) -> list[Coordinate]:
         clean_coordinate = None
 
         if (isinstance(raw_coordinate, dict)):
-            clean_coordinate = Coordinate.from_dict(raw_coordinate)
+            clean_coordinate = Coordinate.from_flat_dict(raw_coordinate)
         elif (isinstance(raw_coordinate, str)):
             clean_coordinate = Coordinate.from_uci(raw_coordinate)
 

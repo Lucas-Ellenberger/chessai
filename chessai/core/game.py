@@ -296,12 +296,12 @@ class Game(abc.ABC):
             game_info.start_fen = start_fen
 
         # Extract header information into the game info.
-        game_info.event = parsed_pgn.headers.get(chessai.core.gameparser.StandardPGNHeaders.EVENT, '?')
-        game_info.site = parsed_pgn.headers.get(chessai.core.gameparser.StandardPGNHeaders.SITE, '?')
-        game_info.date = parsed_pgn.headers.get(chessai.core.gameparser.StandardPGNHeaders.DATE, '????.??.??')
-        game_info.game_round = parsed_pgn.headers.get(chessai.core.gameparser.StandardPGNHeaders.ROUND, '?')
-        game_info.white_player = parsed_pgn.headers.get(chessai.core.gameparser.StandardPGNHeaders.WHITE, '?')
-        game_info.black_player = parsed_pgn.headers.get(chessai.core.gameparser.StandardPGNHeaders.BLACK, '?')
+        game_info.event = parsed_pgn.headers.event
+        game_info.site = parsed_pgn.headers.site
+        game_info.date = parsed_pgn.headers.date
+        game_info.game_round = parsed_pgn.headers.round
+        game_info.white_player = parsed_pgn.headers.white
+        game_info.black_player = parsed_pgn.headers.black
         game_info.extra_info.update(parsed_pgn.optional_headers)
 
         return cls(
@@ -337,15 +337,14 @@ class Game(abc.ABC):
         else:
             result = chessai.core.gameparser.PGNResult.UNKNOWN
 
-        headers = chessai.core.gameparser.StandardHeadersDict({
-                chessai.core.gameparser.StandardPGNHeaders.EVENT:  self.game_info.event,
-                chessai.core.gameparser.StandardPGNHeaders.SITE:   self.game_info.site,
-                chessai.core.gameparser.StandardPGNHeaders.DATE:   self.game_info.date,
-                chessai.core.gameparser.StandardPGNHeaders.ROUND:  self.game_info.game_round,
-                chessai.core.gameparser.StandardPGNHeaders.WHITE:  self.game_info.white_player,
-                chessai.core.gameparser.StandardPGNHeaders.BLACK:  self.game_info.black_player,
-                chessai.core.gameparser.StandardPGNHeaders.RESULT: result,
-                })
+        headers = chessai.core.gameparser.StandardHeaders(
+                event = self.game_info.event,
+                site = self.game_info.site,
+                date = self.game_info.date,
+                game_round = self.game_info.game_round,
+                white = self.game_info.white_player,
+                black = self.game_info.black_player,
+                result = result)
 
         return chessai.core.gameparser.to_pgn(headers, self.game_info.extra_info, type(final_state),
                                               self.game_info.start_fen, self.action_history)
