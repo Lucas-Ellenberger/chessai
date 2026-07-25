@@ -649,7 +649,8 @@ class GameState(edq.util.serial.DictConverter):
         Child classes are responsible for making any deep copies they need to.
         """
 
-        new_state = GameState(board           = self.board.copy(),
+        new_state = type(self)(
+            board           = self.board.copy(),
             turn            = self.turn,
             castling_rights = self.castling_rights,
             en_passant_coordinate = self.en_passant_coordinate,

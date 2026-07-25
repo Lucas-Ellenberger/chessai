@@ -194,11 +194,20 @@ class GameState(chessai.chess.gamestate.GameState):
     def copy(self,
             context: typing.Union[edq.util.serial.SerializationContext, None] = None,
             ) -> 'GameState':
-        new_state = super().copy()
-        new_state = typing.cast(GameState, new_state)
+        new_state = type(self)(
+            board           = self.board.copy(),
+            turn            = self.turn,
+            castling_rights = self.castling_rights,
+            en_passant_coordinate = self.en_passant_coordinate,
+            halfmove_clock  = self.halfmove_clock,
+            fullmove_number = self.fullmove_number,
+            previous_action = self.previous_action,
+            seed            = self.seed,
+            game_over       = self.game_over,
+            search_targets  = self.search_targets.copy(),
+            _search_agent   = self.search_agent,
+            _validate_search_targets = False)
 
-        new_state.search_targets = self.search_targets.copy()
-        new_state.search_agent = self.search_agent
         new_state.score = self.score
 
         return new_state

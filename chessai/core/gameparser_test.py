@@ -309,6 +309,5 @@ class ParseSinglePGNTest(edq.testing.unittest.BaseTest):
                     actual_pgn = chessai.core.gameparser.parse_pgn(raw_pgn, chessai.chess.gamestate.GameState)
                 except Exception as ex:
                     self.fail(f"Unexpected error: '{str(ex)}'.")
-                    continue
 
                 self.assertEqual(expected_pgn, actual_pgn)
